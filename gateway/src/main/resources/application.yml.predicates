@@ -1,0 +1,122 @@
+server:
+  port: 8071
+spring:
+  profiles:
+    active: remoteaddr_route
+
+---
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: after_route
+        uri: http://localhost:8091
+        predicates:
+        - After=2017-01-20T17:42:47.789-07:00[Asia/Shanghai]
+  profiles: after_route
+
+---
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: before_route
+        uri: http://localhost:8092
+        predicates:
+        - Before=2117-01-20T17:42:47.789-07:00[Asia/Shanghai]
+  profiles: before_route
+
+---
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: between_route
+        uri: http://localhost:8093
+        predicates:
+        - Between=2017-01-20T17:42:47.789-07:00[Asia/Shanghai], 2019-12-21T17:42:47.789-07:00[Asia/Shanghai]
+  profiles: between_route
+
+---
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: cookie_route
+        uri: http://localhost:8091
+        predicates:
+#        请求header中添加cookie: chocolate=chip(满足正则表达式即可)， 即可访问
+        - Cookie=chocolate, ch.p
+  profiles: cookie_route
+
+---
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: header_route
+        uri: http://localhost:8092
+        predicates:
+#        请求中需要有此header
+        - Header=X-Request-Id, \d+
+  profiles: header_route
+
+---
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: host_route
+        uri: http://localhost:8093
+        predicates:
+        - Host=**.xkw.com,**.anotherhost.org
+  profiles: host_route
+
+---
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: method_route
+        uri: http://localhost:8091
+        predicates:
+        - Method=GET
+  profiles: method_route
+
+---
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: path_route
+        uri: http://localhost:8092
+        predicates:
+        - Path=/foo/{segment},/bar/{segment}
+#     todo   不支持同时设置多个method？
+#        - Method=GET
+  profiles: path_route
+
+---
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: query_route
+        uri: http://localhost:8093
+        predicates:
+#        请求参数中必须得有baz参数
+        - Query=baz
+#        请求参数中必须得有baz参数，并且值为foobar
+        - Query=baz, foobar
+  profiles: query_route
+
+---
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: remoteaddr_route
+        uri: http://localhost:8091
+        predicates:
+        - RemoteAddr=10.1.23.147
+  profiles: remoteaddr_route

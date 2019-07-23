@@ -1,0 +1,163 @@
+server:
+  port: 8071
+spring:
+  profiles:
+    active: nameRoot
+#    添加对springcloud gateway的监控
+management:
+  endpoint:
+    gateway:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+---
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: add_request_header_route
+        uri: http://localhost:8091
+        filters:
+        - AddRequestHeader=X-Request-Foo, Bar
+#        predicates必须设置
+        predicates:
+        - After=2017-01-20T17:42:47.789-07:00[Asia/Shanghai]
+  profiles: add_request_header_route
+
+---
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: dedupe_response_header_route
+        uri: http://localhost:8091
+        predicates:
+        - After=2017-01-20T17:42:47.789-07:00[Asia/Shanghai]
+        filters:
+#        删除重复的response header
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+  profiles: dedupe_response_header_route
+
+---
+# todo fallback setting
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: hystrix_route
+        uri: http://localhost:8091
+        filters:
+        - name: Hystrix
+          args:
+            name: fallbackcmd
+            fallbackUri: forward:/fallback
+  profiles: hystrix_route
+
+---
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: prefixpath_route
+        uri: http://localhost:8091
+        predicates:
+        - After=2017-01-20T17:42:47.789-07:00[Asia/Shanghai]
+        filters:
+#        a request to /hello, would be sent to /mypath/hello
+        - PrefixPath=/addedPath
+  profiles: prefixpath_route
+
+---
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: requestratelimiter_route
+        uri: http://localhost:8091
+        predicates:
+        - After=2017-01-20T17:42:47.789-07:00[Asia/Shanghai]
+        filters:
+        - name: RequestRateLimiter
+          args:
+            redis-rate-limiter.replenishRate: 1
+            redis-rate-limiter.burstCapacity: 1
+  profiles: requestratelimiter_route
+
+---
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: rewritepath_route
+        uri: http://localhost:8091
+        predicates:
+        - Path=/foo/**
+        filters:
+#        使用的是java正则
+        - RewritePath=/foo/(?<segment>.+), /${segment}
+#        - RewritePath=/foo/(.+), /$1
+  profiles: rewritepath_route
+
+---
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: setpath_route
+        uri: http://localhost:8091
+        predicates:
+        - Path=/foo/{segment}
+        filters:
+        - SetPath=/{segment}
+  profiles: setpath_route
+
+---
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: setstatusstring_route
+        uri: http://localhost:8091
+        predicates:
+        - Path=/string/**
+        filters:
+        - SetStatus=BAD_REQUEST
+      - id: setstatusint_route
+        uri: http://localhost:8091
+        predicates:
+        - Path=/int/**
+        filters:
+        - SetStatus=401
+  profiles: setstatus_route
+
+---
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: nameRoot
+        uri: http://localhost:8091
+        predicates:
+        - Path=/name/**
+        filters:
+#        去掉多少层前缀 如果StripPrefix=1，那么/name/abc/def 转到下游时，就成了/def了
+        - StripPrefix=2
+  profiles: nameRoot
+
+---
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: request_size_route
+      uri: http://localhost:8091/upload
+      predicates:
+      - Path=/upload
+      filters:
+      - name: RequestSize
+        args:
+          maxSize: 5000000
+  profiles: request_size_route
