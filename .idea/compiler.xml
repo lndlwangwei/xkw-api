@@ -8,11 +8,15 @@
         <outputRelativeToContentRoot value="true" />
         <module name="eureka-server" />
         <module name="gateway" />
+        <module name="graceful-shutdown" />
         <module name="test-api1" />
         <module name="test-api2" />
         <module name="test-api3" />
         <module name="xkw-api" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="eureka-client" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

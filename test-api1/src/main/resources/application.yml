@@ -1,2 +1,27 @@
 server:
   port: 8091
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+spring:
+  application:
+    name: test-api
+
+#management:
+#  endpoint:
+#    shutdown:
+#      enabled: true
+#    web:
+#      exposure:
+#        include: "*"
+
+#    添加对springcloud gateway的监控
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"

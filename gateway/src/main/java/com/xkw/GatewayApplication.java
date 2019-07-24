@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 // todo gateway 路由监控和动态配置  actuator
@@ -64,10 +65,10 @@ public class GatewayApplication {
             exchange.getResponse().setStatusCode(HttpStatus.BAD_REQUEST);
             ServerHttpResponse response = exchange.getResponse();
 
-            DataBuffer buffer = exchange.getResponse().bufferFactory().wrap("this is a error request".getBytes());
-            response.writeWith(Flux.just(buffer));
+            byte[] bytes = "{\"status\":\"-1\",\"msg\":\"error\"}".getBytes(StandardCharsets.UTF_8);
+            DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(bytes);
 
-            return Mono.empty();
+            return response.writeWith(Flux.just(buffer));
 
 //            return chain.filter(exchange).then(Mono.fromRunnable(() -> {
 //                log.info("third post filter");

@@ -10,6 +10,7 @@
         <option value="$PROJECT_DIR$/test-api1/pom.xml" />
         <option value="$PROJECT_DIR$/test-api2/pom.xml" />
         <option value="$PROJECT_DIR$/test-api3/pom.xml" />
+        <option value="$PROJECT_DIR$/graceful-shutdown/pom.xml" />
       </list>
     </option>
   </component>
