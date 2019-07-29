@@ -1,9 +1,14 @@
 package com.xkw;
 
+import com.xkw.auth.BasicAuth;
+import com.xkw.common.GatewayException;
+import org.apache.shiro.authz.Permission;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.cloud.gateway.route.RouteLocator;
@@ -12,6 +17,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,9 +30,13 @@ import java.util.Objects;
 // todo gateway 路由监控和动态配置  actuator
 @SpringBootApplication
 @RestController
+@EnableCaching
 public class GatewayApplication {
 
     private static final Logger log = LoggerFactory.getLogger(GatewayApplication.class);
+
+    @Autowired
+    BasicAuth basicAuth;
 
     public static void main(String[] args) {
         SpringApplication.run(GatewayApplication.class, args);
@@ -59,43 +69,23 @@ public class GatewayApplication {
     @Bean
     @Order(-1)
     public GlobalFilter a() {
+
         return (exchange, chain) -> {
-            log.info("first pre filter");
 
-            exchange.getResponse().setStatusCode(HttpStatus.BAD_REQUEST);
-            ServerHttpResponse response = exchange.getResponse();
+            try {
+                basicAuth.doAuth(exchange.getRequest());
+            } catch (GatewayException e) {
+                ServerHttpResponse response = exchange.getResponse();
+                response.setStatusCode(HttpStatus.FORBIDDEN);
+                response.getHeaders().set("Content-Type", "text/plain;charset=UTF-8");
 
-            byte[] bytes = "{\"status\":\"-1\",\"msg\":\"error\"}".getBytes(StandardCharsets.UTF_8);
-            DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(bytes);
+                byte[] bytes = e.getMessage().getBytes(StandardCharsets.UTF_8);
+                DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(bytes);
 
-            return response.writeWith(Flux.just(buffer));
+                return response.writeWith(Flux.just(buffer));
+            }
 
-//            return chain.filter(exchange).then(Mono.fromRunnable(() -> {
-//                log.info("third post filter");
-//            }));
-        };
-    }
-
-    @Bean
-    @Order(0)
-    public GlobalFilter b() {
-        return (exchange, chain) -> {
-            log.info("second pre filter");
-            return chain.filter(exchange).then(Mono.fromRunnable(() -> {
-                log.info("second post filter");
-            }));
-        };
-    }
-
-    @Bean
-    @Order(1)
-    public GlobalFilter c() {
-        return (exchange, chain) -> {
-            log.info("third pre filter");
-            return chain.filter(exchange).then(Mono.fromRunnable(() -> {
-                log.info("first post filter");
-                System.out.println(exchange.getRequest().getPath());
-            }));
+            return chain.filter(exchange);
         };
     }
 }

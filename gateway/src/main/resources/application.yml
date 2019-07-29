@@ -2,7 +2,17 @@ server:
   port: 8071
 spring:
   profiles:
-    active: nameRoot
+    active: add_request_header_route
+  datasource:
+    url: jdbc:mysql://localhost:3306/test?useSSL=false&characterEncoding=utf-8
+    username: root
+    password: root
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
 #    添加对springcloud gateway的监控
 management:
   endpoint:
@@ -14,6 +24,7 @@ management:
     web:
       exposure:
         include: "*"
+
 
 ---
 spring:
