@@ -20,8 +20,9 @@
 //}
 
 def envProp = load('jenkins/script/envProp.groovy')
+def nodes = ['dev', '28test']
 def branches = [:]
-envProp.nodes().each {nodeName ->
+nodes.each {nodeName ->
     branches[nodeName] = {
         node(nodeName) {
             echo nodeName
