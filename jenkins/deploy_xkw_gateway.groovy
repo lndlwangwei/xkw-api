@@ -13,7 +13,8 @@ node('dev') {
     stage('init') {
         def envProp = load("${WORKSPACE}/jenkins/script/envProp.groovy")
         for (int i = 0; i < 3; i++) {
-            echo envProp.nodes[i]
+            echo 'as;dfklasd;lfkjas;ldf'
+            echo envProp.nodes()[i]
         }
 
         echo envProp.test
