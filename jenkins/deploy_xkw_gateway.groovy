@@ -41,7 +41,7 @@
 //parallel branches
 
 
-def stringsToEcho = ["dev", "28test", "c", "d"]
+def stringsToEcho = ["dev", "28test"]
 
 // The map we'll store the parallel steps in before executing them.
 def stepsForParallel = stringsToEcho.collectEntries {
