@@ -11,10 +11,13 @@ node('dev') {
     echo 'hello wangwei'
 
     stage('init') {
+        def envProp = load("${WORKSPACE}/script/envProp.groovy")
+        envProp.nodes.each { n ->
+            echo n
+        }
 
         if (fileExists('/data/jenkins')) {
             echo 'file exists'
-
         }
         else {
             echo 'file not exists'
