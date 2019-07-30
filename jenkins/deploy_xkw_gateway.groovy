@@ -1,5 +1,5 @@
 node('dev') {
-    def externalMethod = load("script/externalScript.groovy")
+    def externalMethod = load("externalScript.groovy")
 
     externalMethod.sayHello('wangwei')
     echo 'hello wangwei'
