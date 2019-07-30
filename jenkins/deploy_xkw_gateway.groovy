@@ -1,27 +1,6 @@
-//node('dev') {
-//    git 'https://github.com/lndlwangwei/xkw-api'
-//    def envProp = load("${WORKSPACE}/jenkins/script/envProp.groovy")
-//
-//    stage('deploy') {
-//        def serviceBasePath = '/data/service/gateway'
-//        def claster1 = envProp.gatewayClaster1()
-//
-//        nodes.each {node ->
-//            echo node
-//        }
-//
-//        if (fileExists('/data/jenkins')) {
-//            echo 'file exists'
-//        }
-//        else {
-//            echo 'file not exists'
-//        }
-//    }
-//}
-
-//def envProp = load('jenkins/script/envProp.groovy')
 def nodes = ['dev':['gateway1', 'gateway2', 'gateway3'], '28test':['gateway1', 'gateway2']]
 def serviceBasePath = '/data/service/gateways'
+def buildProject = "xkw-api-gateway-build"
 
 nodes.entrySet().each {entry ->
     def nodeName = entry.key
@@ -35,40 +14,11 @@ nodes.entrySet().each {entry ->
                     sh "mkdir ${servicePath}"
                     writeFile encoding: 'utf-8', file: "$servicePath/test.txt", text: "this is $it"
                 }
+
+                copyArtifacts(projectName: "${buildProjectName}")
+                sh "cp target/*.jar ${servicePath}"
+                sh "java -jar ${servicePath}/gateway-0.0.1-SNAPSHOT.jar"
             }
         }
     }
 }
-
-//branches.entrySet().each {
-//    it.value()
-//}
-//parallel branches
-
-//node('28test') {
-//    git 'https://github.com/lndlwangwei/xkw-api'
-//    def envProp = load("${WORKSPACE}/jenkins/script/envProp.groovy")
-//
-//    stage('deploy') {
-//        def serviceBasePath = '/data/service/gateway'
-//        def claster1 = envProp.gatewayClaster1()
-//
-//
-//        claster1.each {node ->
-//            echo node
-//        }
-//
-//        if (fileExists('/data/jenkins')) {
-//            echo 'file exists'
-//        }
-//        else {
-//            echo 'file not exists'
-//        }
-//    }
-//}
-
-// 获取node names
-//@NonCPS
-//def nodeNames() {
-//    return jenkins.model.Jenkins.instance.nodes.collect { node -> node.name }
-//}
