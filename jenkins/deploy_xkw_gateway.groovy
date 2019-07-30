@@ -7,8 +7,6 @@ node('dev') {
 
     echo "${rootDir}/jenkins/externalScript.groovy"
 
-    echo externalMethod
-
     externalMethod.sayHello('wangwei')
     echo 'hello wangwei'
 
