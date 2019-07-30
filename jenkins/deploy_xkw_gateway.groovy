@@ -12,12 +12,14 @@ node('dev') {
 
     stage('init') {
         def envProp = load("${WORKSPACE}/jenkins/script/envProp.groovy")
+        def nodes = envProp.nodes()
         for (int i = 0; i < 3; i++) {
-            echo 'as;dfklasd;lfkjas;ldf'
-            echo envProp.nodes()[i]
+            echo nodes[i]
         }
 
-        echo envProp.test
+        nodes {n1 ->
+            echo n1
+        }
 
         if (fileExists('/data/jenkins')) {
             echo 'file exists'
