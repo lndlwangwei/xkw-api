@@ -19,7 +19,7 @@
 //    }
 //}
 
-def envProp = load("${WORKSPACE}/jenkins/script/envProp.groovy")
+def envProp = load('jenkins/script/envProp.groovy')
 envProp.gatewayClaster1.each {node ->
     echo node
 }
