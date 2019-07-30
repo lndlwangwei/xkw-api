@@ -17,8 +17,8 @@ node('dev') {
             echo nodes[i]
         }
 
-        nodes.each {n1 ->
-            echo n1
+        nodes.each {node ->
+            echo node
         }
 
         if (fileExists('/data/jenkins')) {
