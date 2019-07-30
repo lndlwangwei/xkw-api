@@ -1,4 +1,4 @@
-package com.xkw.auth;
+package com.xkw.gateway.domain;
 
 import org.apache.shiro.codec.Base64;
 

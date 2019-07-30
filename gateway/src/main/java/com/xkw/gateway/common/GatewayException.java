@@ -1,4 +1,4 @@
-package com.xkw.common;
+package com.xkw.gateway.common;
 
 /**
  * @author wangwei

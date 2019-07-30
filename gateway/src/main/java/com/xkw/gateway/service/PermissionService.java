@@ -1,5 +1,7 @@
-package com.xkw.auth;
+package com.xkw.gateway.service;
 
+import com.xkw.gateway.domain.Permission;
+import com.xkw.gateway.repository.PermissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;

@@ -1,21 +1,20 @@
-package com.xkw.auth;
+package com.xkw.gateway.auth;
 
-import com.alibaba.fastjson.JSON;
-import com.xkw.common.GatewayException;
+import com.xkw.gateway.common.GatewayException;
+import com.xkw.gateway.domain.Application;
+import com.xkw.gateway.service.ApplicationService;
+import com.xkw.gateway.service.PermissionService;
 import org.apache.shiro.authz.Permission;
 import org.apache.shiro.authz.permission.WildcardPermission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author wangwei
@@ -53,10 +52,10 @@ public class BasicAuth {
         }
 
         Permission neededPermission = new WildcardPermission(request.getPath().toString().replaceAll("^/+", "").replaceAll("/+", ":"));
-        List<com.xkw.auth.Permission> permissions = permissionService.getByAppId(appId);
+        List<com.xkw.gateway.domain.Permission> permissions = permissionService.getByAppId(appId);
 
         if (!CollectionUtils.isEmpty(permissions)) {
-            for (com.xkw.auth.Permission p : permissions) {
+            for (com.xkw.gateway.domain.Permission p : permissions) {
                 Permission permission = new WildcardPermission(p.getPermission());
                 if (permission.implies(neededPermission)) {
                     return;

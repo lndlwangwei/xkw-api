@@ -1,4 +1,4 @@
-package com.xkw.auth;
+package com.xkw.gateway.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
