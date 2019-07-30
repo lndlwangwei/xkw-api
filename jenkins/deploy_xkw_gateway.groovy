@@ -19,8 +19,8 @@
 //    }
 //}
 
-def nodes = nodeNames()
-nodes.each {node ->
+def envProp = load("${WORKSPACE}/jenkins/script/envProp.groovy")
+envProp.gatewayClaster1.each {node ->
     echo node
 }
 
@@ -47,7 +47,7 @@ nodes.each {node ->
 //}
 
 // 获取node names
-@NonCPS
-def nodeNames() {
-    return jenkins.model.Jenkins.instance.nodes.collect { node -> node.name }
-}
+//@NonCPS
+//def nodeNames() {
+//    return jenkins.model.Jenkins.instance.nodes.collect { node -> node.name }
+//}
