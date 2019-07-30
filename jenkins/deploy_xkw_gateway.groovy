@@ -25,16 +25,18 @@ def envProp = load('jenkins/script/envProp.groovy')
 //        echo nodeName
 //    }
 //}
-
+def branches = [:]
 for (int i = 0; i < 2; i++) {
     def nodeName
     if (i == 0) nodeName = 'dev'
     else nodeName = '28test'
 
-    node(nodeName) {
+    branches[nodeName] = node(nodeName) {
         echo nodeName
     }
 }
+
+parallel branches
 
 //node('28test') {
 //    git 'https://github.com/lndlwangwei/xkw-api'
