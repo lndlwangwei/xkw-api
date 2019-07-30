@@ -17,7 +17,7 @@ node('dev') {
             echo nodes[i]
         }
 
-        nodes {n1 ->
+        nodes.each {n1 ->
             echo n1
         }
 
