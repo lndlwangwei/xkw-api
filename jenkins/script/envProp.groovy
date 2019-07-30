@@ -1,13 +1,5 @@
-def gatewayClaster1() {
-    return ['gateway1', 'gateway2', 'gateway3']
-}
-
-def gatewayClaster2() {
-    return ['gateway1', 'gateway2', 'gateway3']
-}
-
-def nodes() {
-    return ['dev', '28test']
+def Clasters() {
+    return ['dev': ['gateway1', 'gateway2', 'gateway3'], '28test':['gateway1', 'gateway2']]
 }
 
 return this
