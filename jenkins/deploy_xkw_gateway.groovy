@@ -17,7 +17,7 @@ nodes.entrySet().each {entry ->
 
                 copyArtifacts(projectName: "${buildProjectName}")
                 sh "cp target/*.jar ${servicePath}"
-                sh "java -jar ${servicePath}/gateway-0.0.1-SNAPSHOT.jar"
+                sh "java -jar ${servicePath}/gateway-0.0.1-SNAPSHOT.jar &"
             }
         }
     }
