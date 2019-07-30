@@ -20,8 +20,10 @@
 //}
 
 def envProp = load('jenkins/script/envProp.groovy')
-envProp.gatewayClaster1.each {node1 ->
-    echo node1
+envProp.nodes().each {nodeName ->
+    node(nodeName) {
+        echo nodeName
+    }
 }
 
 //node('28test') {
