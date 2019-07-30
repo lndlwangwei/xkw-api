@@ -11,7 +11,7 @@ node('dev') {
 //    echo 'hello wangwei'
 
     stage('init') {
-        def envProp = load("${WORKSPACE}/script/envProp.groovy")
+        def envProp = load("${WORKSPACE}/jenkins/script/envProp.groovy")
         envProp.nodes.each { n ->
             echo n
         }
