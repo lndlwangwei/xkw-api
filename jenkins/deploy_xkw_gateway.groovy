@@ -19,9 +19,9 @@ nodes.entrySet().each {entry ->
 
                 sh "cp target/*.jar ${servicePath}"
 
-                withEnv(['JENKINS_NODE_COOKIE=dontkillme']) {
+//                withEnv(['JENKINS_NODE_COOKIE=dontkillme']) {
                     sh "java -jar ${servicePath}/gateway-0.0.1-SNAPSHOT.jar &"
-                }
+//                }
             }
         }
     }
