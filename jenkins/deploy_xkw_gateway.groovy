@@ -2,13 +2,13 @@ node('dev') {
 
     git 'https://github.com/lndlwangwei/xkw-api'
 
-    def rootDir = pwd()
-    def externalMethod = load "${rootDir}/jenkins/externalScript.groovy"
-
-    echo "${rootDir}/jenkins/externalScript.groovy"
-
-    externalMethod.sayHello('wangwei')
-    echo 'hello wangwei'
+//    def rootDir = pwd()
+//    def externalMethod = load "${rootDir}/jenkins/externalScript.groovy"
+//
+//    echo "${rootDir}/jenkins/externalScript.groovy"
+//
+//    externalMethod.sayHello('wangwei')
+//    echo 'hello wangwei'
 
     stage('init') {
         def envProp = load("${WORKSPACE}/script/envProp.groovy")
