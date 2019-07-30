@@ -20,25 +20,16 @@
 //}
 
 //def envProp = load('jenkins/script/envProp.groovy')
-def nodes = ['dev', '28test']
+def nodes = ['dev':['gateway1', 'gateway2', 'gateway3'], '28test':['gateway1', 'gateway2']]
 def branches = [:]
-branches['dev'] = {
-    node('dev') {
-        echo 'dev'
+
+nodes.entrySet().each {entry ->
+    branches[entry.key] = {
+        node(entry.key) {
+            entry.value.each {echo it}
+        }
     }
 }
-branches['28test'] = {
-    node('28test') {
-        echo '28test'
-    }
-}
-//nodes.each {nodeName ->
-//    branches[nodeName] = {
-//        node(nodeName) {
-//            echo nodeName
-//        }
-//    }
-//}
 
 parallel branches
 
