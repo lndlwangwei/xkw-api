@@ -5,7 +5,7 @@ node('dev') {
     echo 'hello wangwei'
 
     stage('init') {
-        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/lndlwangwei/xkw-api']]])
+        git 'https://github.com/lndlwangwei/xkw-api/tree/master/jenkins'
         if (fileExists('/data/jenkins')) {
             echo 'file exists'
 
