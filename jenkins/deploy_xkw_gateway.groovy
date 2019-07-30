@@ -1,6 +1,6 @@
 def nodes = ['dev':['gateway1', 'gateway2', 'gateway3'], '28test':['gateway1', 'gateway2']]
 def serviceBasePath = '/data/service/gateways'
-def buildProject = "xkw-api-gateway-build"
+def buildProjectName = "xkw-api-gateway-build"
 
 nodes.entrySet().each {entry ->
     def nodeName = entry.key
