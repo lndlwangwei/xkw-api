@@ -1,8 +1,10 @@
 node('28test') {
     stage('build') {
-        git 'https://github.com/lndlwangwei/xkw-api'
-        sh 'mvn install -Dmaven.test.skip=true'
+        dir('gateway') {
+            git 'https://github.com/lndlwangwei/xkw-api'
+            sh 'mvn clean install -Dmaven.test.skip=true'
 
-        archiveArtifacts 'target/*.jar'
+            archiveArtifacts 'target/*.jar'
+        }
     }
 }
