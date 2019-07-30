@@ -20,7 +20,17 @@
 //}
 
 def envProp = load('jenkins/script/envProp.groovy')
-envProp.nodes().each {nodeName ->
+//envProp.nodes().each {nodeName ->
+//    node(nodeName) {
+//        echo nodeName
+//    }
+//}
+
+for (int i = 0; i < 2; i++) {
+    def nodeName
+    if (i == 0) nodeName = 'dev'
+    else nodeName = '28test'
+
     node(nodeName) {
         echo nodeName
     }
