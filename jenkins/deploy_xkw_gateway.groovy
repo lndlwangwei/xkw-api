@@ -31,6 +31,8 @@ for (int i = 0; i < 2; i++) {
     if (i == 0) nodeName = 'dev'
     else nodeName = '28test'
 
+    echo nodeName
+
     branches[nodeName] = node(nodeName) {
         echo nodeName
     }
