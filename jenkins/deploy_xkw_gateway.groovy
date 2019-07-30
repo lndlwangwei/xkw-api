@@ -1,5 +1,6 @@
 node('dev') {
-    def externalMethod = load("jenkins/externalScript.groovy")
+    echo rootDir
+    def externalMethod = load("${rootDir}/jenkins/externalScript.groovy")
 
     echo externalMethod
 
