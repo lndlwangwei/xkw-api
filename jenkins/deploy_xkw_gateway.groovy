@@ -24,14 +24,17 @@ def nodes = ['dev':['gateway1', 'gateway2', 'gateway3'], '28test':['gateway1', '
 def branches = [:]
 
 nodes.entrySet().each {entry ->
-    branches[entry.key] = {
-        node(entry.key) {
-            entry.value.each {echo it}
-        }
-    }
+//    branches[entry.key] = {
+//        node(entry.key) {
+//            entry.value.each {echo it}
+//        }
+//    }
+
 }
 
-branches
+branches.entrySet().each {
+    it.value()
+}
 //parallel branches
 
 //node('28test') {
