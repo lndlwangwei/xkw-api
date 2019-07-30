@@ -30,11 +30,14 @@ nodes.entrySet().each {entry ->
 //        }
 //    }
 
+    node(entry.key) {
+        entry.value.each {echo it}
+    }
 }
 
-branches.entrySet().each {
-    it.value()
-}
+//branches.entrySet().each {
+//    it.value()
+//}
 //parallel branches
 
 //node('28test') {
