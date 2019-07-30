@@ -19,7 +19,7 @@
 //    }
 //}
 
-def envProp = load('jenkins/script/envProp.groovy')
+//def envProp = load('jenkins/script/envProp.groovy')
 def nodes = ['dev', '28test']
 def branches = [:]
 branches['dev'] = {
