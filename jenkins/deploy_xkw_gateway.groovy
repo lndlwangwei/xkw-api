@@ -31,7 +31,8 @@ nodes.entrySet().each {entry ->
     }
 }
 
-parallel branches
+branches
+//parallel branches
 
 //node('28test') {
 //    git 'https://github.com/lndlwangwei/xkw-api'
