@@ -16,6 +16,8 @@ node('dev') {
             echo envProp.nodes[i]
         }
 
+        echo envProp.test
+
         if (fileExists('/data/jenkins')) {
             echo 'file exists'
         }
