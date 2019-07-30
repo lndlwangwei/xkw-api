@@ -21,17 +21,22 @@
 
 //def envProp = load('jenkins/script/envProp.groovy')
 def nodes = ['dev':['gateway1', 'gateway2', 'gateway3'], '28test':['gateway1', 'gateway2']]
-def branches = [:]
+def serviceBasePath = '/data/service/gateway'
 
 nodes.entrySet().each {entry ->
-//    branches[entry.key] = {
-//        node(entry.key) {
-//            entry.value.each {echo it}
-//        }
-//    }
+    def nodeName = entry.key
+    def services = entry.value
 
-    node(entry.key) {
-        entry.value.each {echo it}
+    node(nodeName) {
+        stage('deploy') {
+            services.each {
+                def servicePath = serviceBasePath + it
+                if (!fileExists(servicePath)) {
+                    sh "mkdir ${servicePath}"
+                    writeFile encoding: 'utf-8', file: "$servicePath/test.txt", text: "this is $it"
+                }
+            }
+        }
     }
 }
 
