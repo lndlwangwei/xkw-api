@@ -22,13 +22,23 @@
 def envProp = load('jenkins/script/envProp.groovy')
 def nodes = ['dev', '28test']
 def branches = [:]
-nodes.each {nodeName ->
-    branches[nodeName] = {
-        node(nodeName) {
-            echo nodeName
-        }
+branches['dev'] = {
+    node('dev') {
+        echo 'dev'
     }
 }
+branches['28test'] = {
+    node('28test') {
+        echo '28test'
+    }
+}
+//nodes.each {nodeName ->
+//    branches[nodeName] = {
+//        node(nodeName) {
+//            echo nodeName
+//        }
+//    }
+//}
 
 parallel branches
 
