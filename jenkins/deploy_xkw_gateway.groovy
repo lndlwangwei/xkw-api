@@ -1,12 +1,14 @@
 node('dev') {
-    def externalMethod = load("externalScript.groovy")
-
-    externalMethod.sayHello('wangwei')
+//    def externalMethod = load("externalScript.groovy")
+//
+//    externalMethod.sayHello('wangwei')
     echo 'hello wangwei'
 
     stage('init') {
+        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/lndlwangwei/xkw-api']]])
         if (fileExists('/data/jenkins')) {
             echo 'file exists'
+
         }
         else {
             echo 'file not exists'
