@@ -8,6 +8,8 @@ nodes.entrySet().each {entry ->
 
     node(nodeName) {
         stage('deploy') {
+            copyArtifacts(projectName: "${buildProjectName}")
+
             services.each {
                 def servicePath = "$serviceBasePath/$it"
                 if (!fileExists(servicePath)) {
@@ -15,9 +17,11 @@ nodes.entrySet().each {entry ->
                     writeFile encoding: 'utf-8', file: "$servicePath/test.txt", text: "this is $it"
                 }
 
-                copyArtifacts(projectName: "${buildProjectName}")
                 sh "cp target/*.jar ${servicePath}"
-                sh "java -jar ${servicePath}/gateway-0.0.1-SNAPSHOT.jar &"
+
+                withEnv(['JENKINS_NODE_COOKIE=dontkillme']) {
+                    sh "java -jar ${servicePath}/gateway-0.0.1-SNAPSHOT.jar &"
+                }
             }
         }
     }
