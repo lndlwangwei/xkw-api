@@ -41,7 +41,7 @@
 //parallel branches
 
 
-def stringsToEcho = ["a", "b", "c", "d"]
+def stringsToEcho = ["dev", "28test", "c", "d"]
 
 // The map we'll store the parallel steps in before executing them.
 def stepsForParallel = stringsToEcho.collectEntries {
@@ -59,7 +59,7 @@ def transformIntoStep(inputString) {
     // To do this, you need to wrap the code below in { }, and either return
     // that explicitly, or use { -> } syntax.
     return {
-        node {
+        node(inputString) {
             echo inputString
         }
     }
