@@ -22,7 +22,7 @@
 def envProp = load('jenkins/script/envProp.groovy')
 def branches = [:]
 envProp.nodes().each {nodeName ->
-    branches = {
+    branches[nodeName] = {
         node(nodeName) {
             echo nodeName
         }
