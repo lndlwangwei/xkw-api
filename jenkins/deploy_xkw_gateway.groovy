@@ -19,7 +19,10 @@
 //    }
 //}
 
-echo nodeNames()
+def nodes = nodeNames()
+nodes.each {node ->
+    echo node
+}
 
 //node('28test') {
 //    git 'https://github.com/lndlwangwei/xkw-api'
@@ -43,7 +46,8 @@ echo nodeNames()
 //    }
 //}
 
+// 获取node names
 @NonCPS
 def nodeNames() {
-    return jenkins.model.Jenkins.instance.nodes.collect { node -> echo node.name }
+    return jenkins.model.Jenkins.instance.nodes.collect { node -> node.name }
 }
