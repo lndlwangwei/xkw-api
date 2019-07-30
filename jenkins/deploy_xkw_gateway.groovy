@@ -1,6 +1,6 @@
 node('dev') {
-    echo rootDir
-    def externalMethod = load("${rootDir}/jenkins/externalScript.groovy")
+    echo WORKSPACE
+    def externalMethod = load("${WORKSPACE}/jenkins/externalScript.groovy")
 
     echo externalMethod
 
