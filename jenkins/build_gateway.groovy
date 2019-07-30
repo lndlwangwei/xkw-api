@@ -1,7 +1,8 @@
 node('28test') {
     stage('build') {
+        git 'https://github.com/lndlwangwei/xkw-api'
+
         dir('gateway') {
-            git 'https://github.com/lndlwangwei/xkw-api'
             sh 'mvn clean install -Dmaven.test.skip=true'
 
             archiveArtifacts 'target/*.jar'
