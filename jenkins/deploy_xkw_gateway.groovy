@@ -1,4 +1,7 @@
 node('dev') {
+
+    git 'https://github.com/lndlwangwei/xkw-api'
+
     def rootDir = pwd()
     def externalMethod = load "${rootDir}/jenkins/externalScript.groovy"
 
@@ -10,7 +13,7 @@ node('dev') {
     echo 'hello wangwei'
 
     stage('init') {
-        git 'https://github.com/lndlwangwei/xkw-api'
+
         if (fileExists('/data/jenkins')) {
             echo 'file exists'
 
