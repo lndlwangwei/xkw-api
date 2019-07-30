@@ -1,7 +1,9 @@
-def nodes0 = ['node1', 'node2', 'node3']
-def test = 'test wangwei prop'
-def nodes() {
-    return ['node1', 'node2', 'node3']
+def gatewayClaster1() {
+    return ['gateway1', 'gateway2', 'gateway3']
+}
+
+def gatewayClaster2() {
+    return ['gateway1', 'gateway2', 'gateway3']
 }
 
 return this
