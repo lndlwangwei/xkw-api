@@ -9,7 +9,7 @@ nodes.entrySet().each {entry ->
     node(env) {
         stage('deploy') {
 //            deleteDir('target')
-            copyArtifacts(projectName: "${buildProjectName}")
+//            copyArtifacts(projectName: "${buildProjectName}")
 
             services.each { service ->
                 def serviceIndex = Integer.parseInt(service.substring(service.length() - 1))
@@ -23,11 +23,11 @@ nodes.entrySet().each {entry ->
                     writeFile encoding: 'utf-8', file: "$servicePath/test.txt", text: "this is $service"
                 }
 
-                sh "cp target/*.jar ${servicePath}"
-
-                withEnv(['JENKINS_NODE_COOKIE=dontkillme']) {
-                    sh "java -jar ${servicePath}/gateway-0.0.1-SNAPSHOT.jar --spring.profiles.active=node$serviceIndex &"
-                }
+//                sh "cp target/*.jar ${servicePath}"
+//
+//                withEnv(['JENKINS_NODE_COOKIE=dontkillme']) {
+//                    sh "java -jar ${servicePath}/gateway-0.0.1-SNAPSHOT.jar --spring.profiles.active=node$serviceIndex &"
+//                }
             }
         }
     }
