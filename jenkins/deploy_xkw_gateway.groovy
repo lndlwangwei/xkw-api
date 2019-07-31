@@ -15,6 +15,7 @@ nodes.entrySet().each {entry ->
                 def serviceIndex = Integer.parseInt(service.substring(service.length() - 1))
 
                 sh "curl localhost:807$serviceIndex"
+                Thread.sleep(60000)
 
                 def servicePath = "$serviceBasePath/$service"
                 if (!fileExists(servicePath)) {
