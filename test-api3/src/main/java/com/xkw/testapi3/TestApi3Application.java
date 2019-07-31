@@ -35,6 +35,6 @@ public class TestApi3Application {
 
     @GetMapping("test-service")
     public String testService() {
-        return restTemplate.getForObject("http://test-api/test-micro-service", String.class);
+        return restTemplate.getForObject("http://xkw-api-gateway/bar", String.class);
     }
 }
