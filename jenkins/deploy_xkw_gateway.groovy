@@ -8,7 +8,7 @@ nodes.entrySet().each {entry ->
 
     node(env) {
         stage('deploy') {
-            deleteDir('target')
+//            deleteDir('target')
             copyArtifacts(projectName: "${buildProjectName}")
 
             services.each { service ->
