@@ -20,10 +20,10 @@ nodes.entrySet().each {entry ->
 
                 sh "cp target/*.jar ${servicePath}"
 
-                    def serviceIndex = service.substring(service.length() - 2)
-//                withEnv(['JENKINS_NODE_COOKIE=dontkillme']) {
+                    def serviceIndex = service.substring(service.length() - 1)
+                withEnv(['JENKINS_NODE_COOKIE=dontkillme']) {
                     sh "java -jar ${servicePath}/gateway-0.0.1-SNAPSHOT.jar --spring.profiles.active=node$serviceIndex &"
-//                }
+                }
             }
         }
     }
