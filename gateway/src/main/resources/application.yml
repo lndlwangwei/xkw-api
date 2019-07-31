@@ -1,14 +1,12 @@
-server:
-  port: 0
 eureka:
   client:
     serviceUrl:
       defaultZone: http://10.1.23.147:8761/eureka/
-  instance:
-    instance-id: ${spring.application.name}-${spring.cloud.client.ipAddress}:${random.int}
+#  instance:
+#    instance-id: ${spring.application.name}:${random.int}
 spring:
 #  profiles:
-#    active: requestratelimiter_route
+#    active: node1
   application:
     name: xkw-api-gateway
   datasource:
