@@ -2,6 +2,7 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://10.1.23.147:8761/eureka/
+
 #  instance:
 #    instance-id: ${spring.application.name}:${random.int}
 spring:

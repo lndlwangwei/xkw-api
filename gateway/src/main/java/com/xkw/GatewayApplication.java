@@ -1,5 +1,6 @@
 package com.xkw;
 
+import com.netflix.discovery.DiscoveryManager;
 import com.xkw.gateway.auth.BasicAuth;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
@@ -58,6 +60,11 @@ public class GatewayApplication {
     @RequestMapping("bar")
     public String testRewritePath() {
         return "bar";
+    }
+
+    @GetMapping("offline")
+    public void unregisterFromEurekaServer() {
+        DiscoveryManager.getInstance().shutdownComponent();
     }
 
     @Bean
