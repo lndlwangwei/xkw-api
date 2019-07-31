@@ -3,12 +3,13 @@ server:
 
 eureka:
   instance:
-    hostname: eureke-server
+#    hostname: eureke-server
+    prefer-ip-address: true
   client:
     registerWithEureka: false
     fetchRegistry: false
     serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://127.0.0.1:${server.port}/eureka/
 #  server:
 #    enable-self-preservation: false
 spring:

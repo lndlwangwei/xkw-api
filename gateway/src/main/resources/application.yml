@@ -1,4 +1,7 @@
+
 eureka:
+  instance:
+    prefer-ip-address: true
   client:
     serviceUrl:
       defaultZone: http://10.1.23.147:8761/eureka/
@@ -52,3 +55,5 @@ management:
     web:
       exposure:
         include: "*"
+server:
+  port: 8070
