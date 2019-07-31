@@ -14,8 +14,8 @@ nodes.entrySet().each {entry ->
             services.each { service ->
                 def serviceIndex = Integer.parseInt(service.substring(service.length() - 1))
 
-                sh "curl localhost:807$serviceIndex"
-                Thread.sleep(60000)
+                sh "curl localhost:807$serviceIndex/offline"
+                sh "sleep 1m"
 
                 def servicePath = "$serviceBasePath/$service"
                 if (!fileExists(servicePath)) {
