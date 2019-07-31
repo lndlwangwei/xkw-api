@@ -1,4 +1,4 @@
-def nodes = ['dev':['gateway1', 'gateway2', 'gateway3'], '28test':['gateway1']]
+def nodes = ['dev':['gateway1'], '28test':['gateway1']]
 def serviceBasePath = '/data/service/gateways'
 def buildProjectName = "xkw-api-gateway-build"
 
