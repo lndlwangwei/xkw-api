@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Objects;
 
 // todo gateway 路由监控和动态配置  actuator
@@ -61,8 +63,9 @@ public class GatewayApplication {
     @Value("${server.port}")
     int port;
     @RequestMapping("bar")
-    public String testRewritePath() {
-        return String.format("bar %s", port);
+    public String testRewritePath() throws UnknownHostException {
+        String ip = InetAddress.getLocalHost().getHostAddress();
+        return String.format("bar %s", ip);
     }
 
     @GetMapping("offline")
