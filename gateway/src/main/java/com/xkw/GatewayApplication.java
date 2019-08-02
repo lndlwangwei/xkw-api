@@ -65,7 +65,7 @@ public class GatewayApplication {
     @RequestMapping("bar")
     public String testRewritePath() throws UnknownHostException {
         String ip = InetAddress.getLocalHost().getHostAddress();
-        return String.format("bar %s", ip);
+        return String.format("bar %s %s", ip);
     }
 
     @GetMapping("offline")
