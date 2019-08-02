@@ -1,4 +1,4 @@
-def nodes = ['dev':['gateway1'], '28test':['gateway1']]
+def nodes = ['dev':['gateway1', 'temp'], '28test':['gateway1', 'temp']]
 def serviceBasePath = '/data/service/gateways'
 def buildProjectName = "xkw-api-gateway-build"
 
@@ -15,10 +15,7 @@ nodes.entrySet().each {entry ->
             copyArtifacts(projectName: "${buildProjectName}")
 
             services.each { service ->
-                def serviceIndex = Integer.parseInt(service.substring(service.length() - 1))
-
-//                sh "curl localhost:807$serviceIndex/offline"
-//                sh "sleep 1m"
+                def serviceIndex = service.equals("temp") ? 9 : Integer.parseInt(service.substring(service.length() - 1))
 
                 def servicePath = "$serviceBasePath/$service"
                 if (!fileExists(servicePath)) {

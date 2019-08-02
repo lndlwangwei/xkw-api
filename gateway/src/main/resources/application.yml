@@ -22,26 +22,26 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
   cloud:
-      gateway:
-        routes:
-        - id: route_qbm
-          uri: http://localhost:8092
-          predicates:
-          - Path=/qbm/**
-          filters:
-          - name: RequestRateLimiter
-            args:
-              redis-rate-limiter.replenishRate: 10000
-              redis-rate-limiter.burstCapacity: 10000
-        - id: route_mdm
-          uri: http://localhost:8093
-          predicates:
-          - Path=/mdm/**
-          filters:
-          - name: RequestRateLimiter
-            args:
-              redis-rate-limiter.replenishRate: 10000
-              redis-rate-limiter.burstCapacity: 10000
+    gateway:
+      routes:
+      - id: route_qbs
+        uri: http://localhost:8092
+        predicates:
+        - Path=/qbm/**
+        filters:
+        - name: RequestRateLimiter
+          args:
+            redis-rate-limiter.replenishRate: 10000
+            redis-rate-limiter.burstCapacity: 10000
+      - id: route_mdm
+        uri: http://localhost:8093
+        predicates:
+        - Path=/master/**
+        filters:
+        - name: RequestRateLimiter
+          args:
+            redis-rate-limiter.replenishRate: 10000
+            redis-rate-limiter.burstCapacity: 10000
 
 #    添加对springcloud gateway的监控
 management:
