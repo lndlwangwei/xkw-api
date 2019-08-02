@@ -16,6 +16,7 @@ nodes.entrySet().each {entry ->
 
             services.each { service ->
                 def serviceIndex = service.equals("temp") ? 9 : Integer.parseInt(service.substring(service.length() - 1))
+                def profile = service.equals("temp") ? 'temp' : "node$serviceIndex"
 
                 def servicePath = "$serviceBasePath/$service"
                 if (!fileExists(servicePath)) {
@@ -26,7 +27,7 @@ nodes.entrySet().each {entry ->
                 sh "cp target/*.jar ${servicePath}"
 
                 withEnv(['JENKINS_NODE_COOKIE=dontkillme']) {
-                    sh "java -jar ${servicePath}/gateway-0.0.1-SNAPSHOT.jar --spring.profiles.active=node$serviceIndex &"
+                    sh "java -jar ${servicePath}/gateway-0.0.1-SNAPSHOT.jar --spring.profiles.active=$profile &"
                 }
             }
         }
