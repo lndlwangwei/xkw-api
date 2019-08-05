@@ -1,4 +1,4 @@
-def nodes = ['dev':['gateway1', 'temp'], '28test':['gateway1', 'temp']]
+def nodes = ['dev':['temp', 'gateway1'], '28test':['temp', 'gateway1']]
 def serviceBasePath = '/data/service/gateways'
 def buildProjectName = "xkw-api-gateway-build"
 
@@ -18,9 +18,13 @@ nodes.entrySet().each {entry ->
                 def serviceIndex = service.equals("temp") ? 9 : Integer.parseInt(service.substring(service.length() - 1))
                 def profile = service.equals("temp") ? 'temp' : "node$serviceIndex"
 
-                // 将服务从eureka server中主动下线
-                sh "curl localhost:807$serviceIndex/offline"
-                sh "sleep 2m"
+//                try {
+//                    // 将服务从eureka server中主动下线
+//                    sh "curl localhost:807$serviceIndex/offline"
+//                    sh "sleep 2m"
+//                } catch (Exception e) {
+//
+//                }
 
                 def servicePath = "$serviceBasePath/$service"
                 if (!fileExists(servicePath)) {
