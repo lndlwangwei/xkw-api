@@ -46,11 +46,9 @@ nodes.entrySet().each {entry ->
             if (services.contains('temp')) {
 
                 sh "curl localhost:8079/offline"
-//                sh "sleep 2m"
-                sh "curl -X POST localhost:8079/actuator/shutdown"
-
-
+                sh "sleep 1m"
                 // 确保临时服务没有被访问后，在停掉临时服务
+                sh "curl -X POST localhost:8079/actuator/shutdown"
 //                sh "http://localhost:8079/actuator/shutdown"
             }
         }
