@@ -21,7 +21,7 @@ nodes.entrySet().each {entry ->
                 catchError(message: 'service is not online') {
                     // 将服务从eureka server中主动下线
                     sh "curl localhost:807$serviceIndex/offline"
-                    sh "sleep 2m"
+                    sh "sleep 1m"
                 }
 
                 def servicePath = "$serviceBasePath/$service"
@@ -45,7 +45,7 @@ nodes.entrySet().each {entry ->
 
                 sh "curl localhost:8079/offline"
 //                sh "sleep 2m"
-                sh "curl localhost:8079/actuator/shutdown"
+                sh "curl -X POST localhost:8079/actuator/shutdown"
 
 
                 // 确保临时服务没有被访问后，在停掉临时服务
