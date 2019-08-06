@@ -38,16 +38,16 @@ nodes.entrySet().each {entry ->
             }
         }
 
-        stage('stop temp server') {
-            echo 'stopping temp server'
-            // 如果服务中有临时服务，需要停掉临时服务
-            if (services.contains('temp')) {
-                sh "curl localhost:8079/offline"
-                sh "sleep 2m"
-
-                // 确保临时服务没有被访问后，在停掉临时服务
-                sh "http://localhost:8079/actuator/shutdown"
-            }
-        }
+//        stage('stop temp server') {
+//            echo 'stopping temp server'
+//            // 如果服务中有临时服务，需要停掉临时服务
+//            if (services.contains('temp')) {
+//                sh "curl localhost:8079/offline"
+//                sh "sleep 2m"
+//
+//                // 确保临时服务没有被访问后，在停掉临时服务
+//                sh "http://localhost:8079/actuator/shutdown"
+//            }
+//        }
     }
 }
