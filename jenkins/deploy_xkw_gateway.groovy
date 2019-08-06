@@ -24,15 +24,15 @@ nodes.entrySet().each {entry ->
                     sh "sleep 2m"
                 }
 
-                def servicePath = "$serviceBasePath/$service"
-                if (!fileExists(servicePath)) {
-                    sh "mkdir ${servicePath}"
-                }
-                sh "cp target/*.jar ${servicePath}"
-
-                withEnv(['JENKINS_NODE_COOKIE=dontkillme']) {
-                    sh "java -jar ${servicePath}/gateway-0.0.1-SNAPSHOT.jar --spring.profiles.active=$profile &"
-                }
+//                def servicePath = "$serviceBasePath/$service"
+//                if (!fileExists(servicePath)) {
+//                    sh "mkdir ${servicePath}"
+//                }
+//                sh "cp target/*.jar ${servicePath}"
+//
+//                withEnv(['JENKINS_NODE_COOKIE=dontkillme']) {
+//                    sh "java -jar ${servicePath}/gateway-0.0.1-SNAPSHOT.jar --spring.profiles.active=$profile &"
+//                }
             }
         }
 
@@ -40,14 +40,14 @@ nodes.entrySet().each {entry ->
             echo 'stopping temp server'
             // 如果服务中有临时服务，需要停掉临时服务
             if (services.contains('temp')) {
-                if (env == 'dev') {
-                    sh "curl 10.1.23.147:8079/offline"
-                    sh "http://10.1.23.147:8079/actuator/shutdown"
-                }
-                else if (env == '28test') {
-                    sh "curl 10.1.22.28:8079/offline"
-                    sh "http://10.1.22.28:8079/actuator/shutdown"
-                }
+//                if (env == 'dev') {
+//                    sh "curl 10.1.23.147:8079/offline"
+//                    sh "http://10.1.23.147:8079/actuator/shutdown"
+//                }
+//                else if (env == '28test') {
+//                    sh "curl 10.1.22.28:8079/offline"
+//                    sh "http://10.1.22.28:8079/actuator/shutdown"
+//                }
 
 //                sh "sleep 2m"
 
