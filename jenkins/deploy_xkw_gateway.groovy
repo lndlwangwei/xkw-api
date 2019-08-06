@@ -22,6 +22,8 @@ nodes.entrySet().each {entry ->
                     // 将服务从eureka server中主动下线
                     sh "curl localhost:807$serviceIndex/offline"
                     sh "sleep 1m"
+                    // 确保下线后，再停掉服务
+                    sh "curl -X POST ocalhost:807$serviceIndex/actuator/shutdown"
                 }
 
                 def servicePath = "$serviceBasePath/$service"
