@@ -23,7 +23,7 @@ nodes.entrySet().each {entry ->
                     sh "curl localhost:807$serviceIndex/offline"
                     sh "sleep 1m"
                     // 确保下线后，再停掉服务
-                    sh "curl -X POST ocalhost:807$serviceIndex/actuator/shutdown"
+                    sh "curl -X POST localhost:807$serviceIndex/actuator/shutdown"
                 }
 
                 def servicePath = "$serviceBasePath/$service"
