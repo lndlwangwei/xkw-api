@@ -18,13 +18,11 @@ nodes.entrySet().each {entry ->
                 def serviceIndex = service.equals("temp") ? 9 : Integer.parseInt(service.substring(service.length() - 1))
                 def profile = service.equals("temp") ? 'temp' : "node$serviceIndex"
 
-//                try {
-//                    // 将服务从eureka server中主动下线
-//                    sh "curl localhost:807$serviceIndex/offline"
-//                    sh "sleep 2m"
-//                } catch (Exception e) {
-//
-//                }
+                catchError(message: 'service is not online') {
+                    // 将服务从eureka server中主动下线
+                    sh "curl localhost:807$serviceIndex/offline"
+                    sh "sleep 2m"
+                }
 
                 def servicePath = "$serviceBasePath/$service"
                 if (!fileExists(servicePath)) {
@@ -43,18 +41,18 @@ nodes.entrySet().each {entry ->
             // 如果服务中有临时服务，需要停掉临时服务
             if (services.contains('temp')) {
                 if (env == 'dev') {
-                    sh "curl http://10.1.23.147:8079/offline"
+                    sh "curl 10.1.23.147:8079/offline"
                     sh "http://10.1.23.147:8079/actuator/shutdown"
                 }
                 else if (env == '28test') {
-                    sh "curl http://10.1.22.28:8079/offline"
+                    sh "curl 10.1.22.28:8079/offline"
                     sh "http://10.1.22.28:8079/actuator/shutdown"
                 }
 
 //                sh "sleep 2m"
 
                 // 确保临时服务没有被访问后，在停掉临时服务
-                sh "http://localhost:8079/actuator/shutdown"
+//                sh "http://localhost:8079/actuator/shutdown"
             }
         }
     }
