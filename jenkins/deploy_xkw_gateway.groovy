@@ -42,7 +42,15 @@ nodes.entrySet().each {entry ->
             echo 'stopping temp server'
             // 如果服务中有临时服务，需要停掉临时服务
             if (services.contains('temp')) {
-                sh "curl localhost:8079/offline"
+                if (env == 'dev') {
+                    sh "curl http://10.1.23.147:8079/offline"
+                    sh "http://10.1.23.147:8079/actuator/shutdown"
+                }
+                else if (env == '28test') {
+                    sh "curl http://10.1.22.28:8079/offline"
+                    sh "http://10.1.22.28:8079/actuator/shutdown"
+                }
+
 //                sh "sleep 2m"
 
                 // 确保临时服务没有被访问后，在停掉临时服务
