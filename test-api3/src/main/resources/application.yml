@@ -5,5 +5,15 @@ eureka:
     serviceUrl:
       defaultZone: http://10.1.23.147:8761/eureka/
 spring:
+  cloud:
+    gateway:
+      routes:
+      - id: gateway-entry
+        uri: lb://xkw-api-gateway1
+        predicates:
+        - Path=/**
+        filters:
+        - AddRequestHeader=X-Request-Foo, Basic QASsdafasdlfka;ASDFQwefds
   application:
     name: test-api3
+

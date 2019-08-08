@@ -2,6 +2,7 @@ package com.xkw;
 
 import com.netflix.discovery.DiscoveryManager;
 import com.xkw.gateway.auth.BasicAuth;
+import com.xkw.gateway.common.GatewayException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,18 @@ import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 // todo gateway 路由监控和动态配置  actuator
@@ -79,18 +85,18 @@ public class GatewayApplication {
 
         return (exchange, chain) -> {
 
-            //            try {
-            //                basicAuth.doAuth(exchange.getRequest());
-            //            } catch (GatewayException e) {
-            //                ServerHttpResponse response = exchange.getResponse();
-            //                response.setStatusCode(HttpStatus.FORBIDDEN);
-            //                response.getHeaders().set("Content-Type", "text/plain;charset=UTF-8");
-            //
-            //                byte[] bytes = e.getMessage().getBytes(StandardCharsets.UTF_8);
-            //                DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(bytes);
-            //
-            //                return response.writeWith(Flux.just(buffer));
-            //            }
+            try {
+                basicAuth.doAuth(exchange.getRequest());
+            } catch (GatewayException e) {
+                ServerHttpResponse response = exchange.getResponse();
+                response.setStatusCode(HttpStatus.FORBIDDEN);
+                response.getHeaders().set("Content-Type", "text/plain;charset=UTF-8");
+
+                byte[] bytes = e.getMessage().getBytes(StandardCharsets.UTF_8);
+                DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(bytes);
+
+                return response.writeWith(Flux.just(buffer));
+            }
 
             return chain.filter(exchange);
         };
