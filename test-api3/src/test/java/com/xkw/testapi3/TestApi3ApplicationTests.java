@@ -11,6 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Base64;
@@ -33,10 +34,18 @@ public class TestApi3ApplicationTests {
         HttpEntity httpEntity = new HttpEntity(null, headers);
 
         //        ResponseEntity<String> res = restTemplate.exchange("http://localhost:8093/master/v1/stages", HttpMethod.GET, httpEntity, String.class);
-        ResponseEntity<String> res =
-            restTemplate.exchange("http://localhost:8093/qbm/v1/banks", HttpMethod.GET, httpEntity, String.class);
 
-        System.out.println(res.getBody());
+        ResponseEntity<String> res = null;
+        try {
+            res =
+                restTemplate.exchange("http://localhost:8093/qbm/v1/banks", HttpMethod.GET, httpEntity, String.class);
+
+            System.out.println(res.getBody());
+        } catch (HttpClientErrorException e) {
+            System.out.println(e.getResponseBodyAsString());
+            throw e;
+        }
+
     }
 
     private void doMdmAuth(HttpHeaders headers) {
@@ -57,6 +66,10 @@ public class TestApi3ApplicationTests {
 
         headers.add("appid", appId);
         headers.add("signature", signature);
+
+        String basicAuthToken =
+            new String(Base64.getEncoder().encode("zujuan:zujuan-password".getBytes()));
+        headers.add("Authorization", String.format("Basic %s", basicAuthToken));
 
     }
 }

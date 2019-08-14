@@ -93,7 +93,7 @@ public class GatewayApplication {
                 response.getHeaders().set("Content-Type", "text/plain;charset=UTF-8");
 
                 byte[] bytes = e.getMessage().getBytes(StandardCharsets.UTF_8);
-                DataBuffer buffer = exchange.getResponse().bufferFactory().wrap(bytes);
+                DataBuffer buffer = response.bufferFactory().wrap(bytes);
 
                 return response.writeWith(Flux.just(buffer));
             }

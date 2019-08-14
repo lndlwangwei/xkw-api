@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="eureka-server" />
         <module name="gateway" />
+        <module name="gateway-admin" />
         <module name="graceful-shutdown" />
         <module name="test-api1" />
         <module name="test-api2" />

@@ -11,6 +11,7 @@
         <option value="$PROJECT_DIR$/test-api2/pom.xml" />
         <option value="$PROJECT_DIR$/test-api3/pom.xml" />
         <option value="$PROJECT_DIR$/graceful-shutdown/pom.xml" />
+        <option value="$PROJECT_DIR$/gateway-admin/pom.xml" />
       </list>
     </option>
   </component>

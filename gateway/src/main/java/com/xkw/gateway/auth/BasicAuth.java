@@ -47,6 +47,7 @@ public class BasicAuth {
         String secret = authentication.substring(index + 1);
 
         Application application = applicationService.getById(appId);
+        // todo 密码加密处理
         if (application == null || !application.getSecret().equals(secret)) {
             throw new GatewayException("凭据无效，认证失败");
         }
