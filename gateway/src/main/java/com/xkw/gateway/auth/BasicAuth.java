@@ -4,6 +4,9 @@ import com.xkw.gateway.common.GatewayException;
 import com.xkw.gateway.domain.Application;
 import com.xkw.gateway.service.ApplicationService;
 import com.xkw.gateway.service.PermissionService;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
 import org.apache.shiro.authz.Permission;
 import org.apache.shiro.authz.permission.WildcardPermission;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +16,10 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,7 +36,13 @@ public class BasicAuth {
     @Autowired
     RedisTemplate redisTemplate;
 
-    public void doAuth(ServerHttpRequest request) {
+    public void doJwtAuth(ServerHttpRequest request) {
+        String appId = request.getHeaders().getFirst("appid");
+        String signature = request.getHeaders().getFirst("signature");
+        validateSignature(appId, signature);
+    }
+
+    public void doBasicAuth(ServerHttpRequest request) {
 
         if (CollectionUtils.isEmpty(request.getHeaders().get(HttpHeaders.AUTHORIZATION)))
             throw new GatewayException("凭据无效，认证失败");
@@ -65,5 +77,26 @@ public class BasicAuth {
         }
 
         throw new GatewayException("您无权访问此接口，请联系管理员！");
+    }
+
+    private void validateSignature(String appId, String signature) {
+        if (StringUtils.isEmpty(appId) || StringUtils.isEmpty(signature)) {
+            throw new GatewayException("签名信息不完整");
+        }
+        Application application = applicationService.getById(appId);
+        String secret = application.getSecret();
+        Jws<Claims> claimsJws;
+        try {
+            claimsJws = Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(signature);
+        } catch (Exception e) {
+            throw new GatewayException("签名信息不正确");
+        }
+        Claims body = claimsJws.getBody();
+        Date timestamp = body.get("timestamp", Date.class);
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.MINUTE, -5);
+        if (timestamp.before(c.getTime())) {
+            throw new GatewayException("签名信息已过期");
+        }
     }
 }

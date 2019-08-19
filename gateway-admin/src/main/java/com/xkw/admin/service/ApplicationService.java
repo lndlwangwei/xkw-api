@@ -6,6 +6,7 @@ import com.xkw.admin.repository.ApplicationRepository;
 import com.xkw.admin.repository.PermissionRepository;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.IteratorUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,7 +47,7 @@ public class ApplicationService {
         permissionRepository.deleteByAppId(appId);
         if (!CollectionUtils.isEmpty(permissionsStr)) {
             List<Permission> permissions =
-                permissionsStr.stream().map(permissionStr -> new Permission(appId, permissionStr)).collect(Collectors.toList());
+                permissionsStr.stream().filter(permissionStr -> !StringUtils.isEmpty(permissionStr)).map(permissionStr -> new Permission(appId, permissionStr)).collect(Collectors.toList());
             permissionRepository.saveAll(permissions);
         }
     }

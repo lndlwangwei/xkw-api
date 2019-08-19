@@ -86,7 +86,7 @@ public class GatewayApplication {
         return (exchange, chain) -> {
 
             try {
-                basicAuth.doAuth(exchange.getRequest());
+                basicAuth.doJwtAuth(exchange.getRequest());
             } catch (GatewayException e) {
                 ServerHttpResponse response = exchange.getResponse();
                 response.setStatusCode(HttpStatus.FORBIDDEN);

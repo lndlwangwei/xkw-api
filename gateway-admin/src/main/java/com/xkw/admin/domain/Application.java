@@ -2,6 +2,8 @@ package com.xkw.admin.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -11,14 +13,20 @@ import java.io.Serializable;
 @Entity
 public class Application implements Serializable {
     @Id
+    @NotNull(message = "id不能为空")
+    @Size(min = 1)
     private String id;
-
+    @NotNull(message = "name不能为空")
+    @Size(min = 1)
     private String name;
-
+    @NotNull(message = "secret不能为空")
+    @Size(min = 1)
     private String secret;
-
+    @NotNull(message = "url不能为空")
+    @Size(min = 1)
     private String url;
-
+    @NotNull(message = "description不能为空")
+    @Size(min = 1)
     private String description;
 
     public String getId() {
