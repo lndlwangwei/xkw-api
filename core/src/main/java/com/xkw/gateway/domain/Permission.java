@@ -1,10 +1,8 @@
-package com.xkw.admin.domain;
+package com.xkw.gateway.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author wangwei
@@ -12,6 +10,11 @@ import java.io.Serializable;
  */
 @Entity
 public class Permission implements Serializable {
+
+    private static final long serialVersionUID = 5317313392933206185L;
+
+    public static final int TYPE_API = 0;
+    public static final int TYPE_DATA = 1;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +27,11 @@ public class Permission implements Serializable {
      * 权限类型，0代表api访问权限，1代表数据权限
      */
     private int type;
+
+    @Transient
+    private String apiPermissionPath;
+    @Transient
+    private List<String> apiPermissionMethod;
 
     public Permission(String appId, String permission) {
         this.appId = appId;
@@ -63,5 +71,21 @@ public class Permission implements Serializable {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public String getApiPermissionPath() {
+        return apiPermissionPath;
+    }
+
+    public void setApiPermissionPath(String apiPermissionPath) {
+        this.apiPermissionPath = apiPermissionPath;
+    }
+
+    public List<String> getApiPermissionMethod() {
+        return apiPermissionMethod;
+    }
+
+    public void setApiPermissionMethod(List<String> apiPermissionMethod) {
+        this.apiPermissionMethod = apiPermissionMethod;
     }
 }

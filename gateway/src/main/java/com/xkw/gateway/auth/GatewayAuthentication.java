@@ -1,8 +1,8 @@
 package com.xkw.gateway.auth;
 
 import com.xkw.gateway.common.GatewayException;
-import com.xkw.gateway.domain.Application;
-import com.xkw.gateway.service.ApplicationService;
+import com.xkw.gateway.domain.ApiGroup;
+import com.xkw.gateway.service.ApiGroupService;
 import com.xkw.gateway.service.PermissionService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -27,22 +27,24 @@ import java.util.List;
  * @since 1.0
  */
 @Component
-public class BasicAuth {
+public class GatewayAuthentication {
 
     @Autowired
-    ApplicationService applicationService;
+    ApiGroupService apiGroupService;
     @Autowired
     PermissionService permissionService;
     @Autowired
     RedisTemplate redisTemplate;
 
-    public void doJwtAuth(ServerHttpRequest request) {
+    public String doJwtAuthc(ServerHttpRequest request) {
         String appId = request.getHeaders().getFirst("appid");
         String signature = request.getHeaders().getFirst("signature");
         validateSignature(appId, signature);
+
+        return appId;
     }
 
-    public void doBasicAuth(ServerHttpRequest request) {
+    public void doBasicAuthc(ServerHttpRequest request) {
 
         if (CollectionUtils.isEmpty(request.getHeaders().get(HttpHeaders.AUTHORIZATION)))
             throw new GatewayException("凭据无效，认证失败");
@@ -58,9 +60,9 @@ public class BasicAuth {
         String appId = authentication.substring(0, index);
         String secret = authentication.substring(index + 1);
 
-        Application application = applicationService.getById(appId);
+        ApiGroup apiGroup = apiGroupService.getById(appId);
         // todo 密码加密处理
-        if (application == null || !application.getSecret().equals(secret)) {
+        if (apiGroup == null || !apiGroup.getSecret().equals(secret)) {
             throw new GatewayException("凭据无效，认证失败");
         }
 
@@ -83,8 +85,8 @@ public class BasicAuth {
         if (StringUtils.isEmpty(appId) || StringUtils.isEmpty(signature)) {
             throw new GatewayException("签名信息不完整");
         }
-        Application application = applicationService.getById(appId);
-        String secret = application.getSecret();
+        ApiGroup apiGroup = apiGroupService.getById(appId);
+        String secret = apiGroup.getSecret();
         Jws<Claims> claimsJws;
         try {
             claimsJws = Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(signature);

@@ -11,9 +11,9 @@ spring:
 #  profiles:
 #    active: node1
   application:
-    name: xkw-api-gateway2
+    name: xkw-api-gateway
   datasource:
-    url: jdbc:mysql://localhost:3306/test?useSSL=false&characterEncoding=utf-8
+    url: jdbc:mysql://localhost:3306/xkw_gateway?useSSL=false&characterEncoding=utf-8
     username: root
     password: root
   jpa:

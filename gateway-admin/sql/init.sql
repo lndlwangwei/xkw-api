@@ -1,8 +1,10 @@
-CREATE TABLE `application` (
+CREATE TABLE `api_group` (
   `id`          varchar(32)  NOT NULL,
   `name`        varchar(64)  NOT NULL,
   `secret`      varchar(64)  NOT NULL,
   `url`         varchar(512) NOT NULL,
+  `api_prefix`  varchar(64) default ''
+  comment 'api前缀，如http://api.xkw.com/qbm/v1/stages,/qbm/v1就是前缀',
   `description` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
 )

@@ -1,4 +1,4 @@
-package com.xkw.admin.domain;
+package com.xkw.gateway.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -11,7 +11,9 @@ import java.io.Serializable;
  * @since 1.0
  */
 @Entity
-public class Application implements Serializable {
+public class ApiGroup implements Serializable {
+
+    private static final long serialVersionUID = -4241211318224748006L;
     @Id
     @NotNull(message = "id不能为空")
     @Size(min = 1)
@@ -25,6 +27,7 @@ public class Application implements Serializable {
     @NotNull(message = "url不能为空")
     @Size(min = 1)
     private String url;
+    private String apiPrefix;
     @NotNull(message = "description不能为空")
     @Size(min = 1)
     private String description;
@@ -53,6 +56,14 @@ public class Application implements Serializable {
         this.secret = secret;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getUrl() {
         return url;
     }
@@ -61,11 +72,11 @@ public class Application implements Serializable {
         this.url = url;
     }
 
-    public String getDescription() {
-        return description;
+    public String getApiPrefix() {
+        return apiPrefix;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setApiPrefix(String apiPrefix) {
+        this.apiPrefix = apiPrefix;
     }
 }

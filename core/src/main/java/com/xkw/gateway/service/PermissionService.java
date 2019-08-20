@@ -1,7 +1,7 @@
 package com.xkw.gateway.service;
 
+import com.xkw.gateway.dao.PermissionRepository;
 import com.xkw.gateway.domain.Permission;
-import com.xkw.gateway.repository.PermissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -20,6 +20,6 @@ public class PermissionService {
 
     @Cacheable(value = "Permission", key = "#appId")
     public List<Permission> getByAppId(String appId) {
-        return permissionRepository.getByAppId(appId);
+        return permissionRepository.getByAppIdAndType(appId, Permission.TYPE_API);
     }
 }

@@ -1,4 +1,4 @@
-package com.xkw.gateway.repository;
+package com.xkw.gateway.dao;
 
 import com.xkw.gateway.domain.Permission;
 import org.springframework.data.repository.CrudRepository;
@@ -11,5 +11,7 @@ import java.util.List;
  */
 public interface PermissionRepository extends CrudRepository<Permission, Integer> {
 
-    List<Permission> getByAppId(String appId);
+    List<Permission> getByAppIdAndType(String appId, int type);
+
+    int deleteByAppId(String appId);
 }

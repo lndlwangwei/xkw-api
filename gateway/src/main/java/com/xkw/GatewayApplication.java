@@ -1,7 +1,8 @@
 package com.xkw;
 
 import com.netflix.discovery.DiscoveryManager;
-import com.xkw.gateway.auth.BasicAuth;
+import com.xkw.gateway.auth.GatewayAuthentication;
+import com.xkw.gateway.auth.GatewayAuthorization;
 import com.xkw.gateway.common.GatewayException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +38,9 @@ public class GatewayApplication {
     private static final Logger log = LoggerFactory.getLogger(GatewayApplication.class);
 
     @Autowired
-    BasicAuth basicAuth;
+    GatewayAuthentication gatewayAuthentication;
+    @Autowired
+    GatewayAuthorization gatewayAuthorization;
 
     public static void main(String[] args) {
         SpringApplication.run(GatewayApplication.class, args);
@@ -86,7 +89,8 @@ public class GatewayApplication {
         return (exchange, chain) -> {
 
             try {
-                basicAuth.doJwtAuth(exchange.getRequest());
+                String appId = gatewayAuthentication.doJwtAuthc(exchange.getRequest());
+                gatewayAuthorization.doAuthorization(appId, exchange.getRequest());
             } catch (GatewayException e) {
                 ServerHttpResponse response = exchange.getResponse();
                 response.setStatusCode(HttpStatus.FORBIDDEN);
