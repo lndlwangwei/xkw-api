@@ -19,6 +19,9 @@ nodes.entrySet().each {entry ->
                 def profile = service.equals("temp") ? 'temp' : "node$serviceIndex"
 
                 warnError(message: 'service is not online') {
+                    def portStatus = sh("lsof -i:808$serviceIndex")
+                    echo "port status: $portStatus"
+
                     // 将服务从eureka server中主动下线
                     sh "curl localhost:807$serviceIndex/offline"
                     sh "sleep 1m"

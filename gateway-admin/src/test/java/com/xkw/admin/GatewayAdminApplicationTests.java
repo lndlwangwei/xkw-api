@@ -34,11 +34,11 @@ public class GatewayAdminApplicationTests {
     @Test
     public void contextLoads() throws InterruptedException {
 
-        for (int j = 0; j < 1; j++) {
+        for (int j = 0; j < 100; j++) {
             new Thread(() -> {
-                for (int i = 0; i < 1000; i++) {
+                for (int i = 0; i < 10000; i++) {
                     try {
-                        Thread.sleep(1000);
+                        //                        Thread.sleep(1000);
 
                         int randomApiIndex = new Random().nextInt(apis.size());
                         //                int randomApiIndex = 0;
@@ -56,6 +56,13 @@ public class GatewayAdminApplicationTests {
 
 
         Thread.sleep(5000000);
+    }
+
+    int count;
+
+    public synchronized int getCount() {
+        System.out.println(count);
+        return count++;
     }
 
     public void requestApi(String api, int i) {
@@ -117,5 +124,17 @@ public class GatewayAdminApplicationTests {
 
         headers.add("appid", appId);
         headers.add("signature", signature);
+    }
+
+    public static void main(String[] args) {
+        String appId = "ali";
+        String secret = "0cx-yx#xn8RArA162JLbG)4nJHOth5Ut";
+
+        Map<String, Object> tokenParams = new HashMap<>();
+        tokenParams.put("timestamp", System.currentTimeMillis());
+        String signature =
+            Jwts.builder().setClaims(new DefaultClaims(tokenParams)).signWith(SignatureAlgorithm.HS512, secret.getBytes()).compact();
+
+        System.out.println(signature);
     }
 }
