@@ -2,7 +2,7 @@ package com.xkw.gateway.auth;
 
 import com.xkw.gateway.common.GatewayException;
 import com.xkw.gateway.domain.Permission;
-import com.xkw.gateway.service.ApiGroupService;
+import com.xkw.gateway.service.ApplicationService;
 import org.apache.shiro.util.AntPathMatcher;
 import org.apache.shiro.util.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +20,15 @@ import java.util.List;
 public class GatewayAuthorization {
 
     @Autowired
-    ApiGroupService apiGroupService;
+    ApplicationService applicationService;
 
     private AntPathMatcher pathMatcher = new AntPathMatcher();
 
     public void doAuthorization(String appId, ServerHttpRequest request) {
-        List<Permission> permissions = apiGroupService.getAppPermission(appId, Permission.TYPE_API);
+        List<Permission> permissions =
+            applicationService.getAppPermission(appId, Permission.TYPE_API);
         if (CollectionUtils.isEmpty(permissions)) {
-            throw new GatewayException("您无权访问此接口！");
+            throw new GatewayException(String.format("您无权访问接口:%s！", request.getPath().value()));
         }
 
         String path = request.getPath().value();
@@ -46,12 +47,6 @@ public class GatewayAuthorization {
             }
         }
 
-        throw new GatewayException("您无权访问此接口！");
-    }
-
-    public static void main(String[] args) {
-        org.springframework.util.AntPathMatcher pathMatcher =
-            new org.springframework.util.AntPathMatcher();
-        System.out.println(pathMatcher.match("/a/{asdfa}/c:GET", "/a/b/c"));
+        throw new GatewayException(String.format("您无权访问接口:%s！", request.getPath().value()));
     }
 }

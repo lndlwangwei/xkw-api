@@ -1,7 +1,6 @@
 package com.xkw.admin.controller;
 
 import com.xkw.gateway.domain.ApiGroup;
-import com.xkw.gateway.domain.Permission;
 import com.xkw.gateway.service.ApiGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -36,13 +35,5 @@ public class ApiGroupController {
         apiGroupService.delete(id);
     }
 
-    @GetMapping("/{groupId}/permissions")
-    public List<Permission> getAppPermission(@PathVariable String groupId) {
-        return apiGroupService.getAppPermission(groupId, Permission.TYPE_API);
-    }
 
-    @PutMapping("/{groupId}/permissions")
-    public void updateAppPermission(@PathVariable String groupId, @RequestBody List<String> permissionsStr) {
-        apiGroupService.updateAppPermission(groupId, permissionsStr);
-    }
 }

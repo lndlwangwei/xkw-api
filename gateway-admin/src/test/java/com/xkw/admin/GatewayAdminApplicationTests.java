@@ -2,6 +2,7 @@ package com.xkw.admin;
 
 import com.xkw.gateway.domain.Permission;
 import com.xkw.gateway.service.ApiGroupService;
+import com.xkw.gateway.service.ApplicationService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.impl.DefaultClaims;
@@ -27,21 +28,37 @@ public class GatewayAdminApplicationTests {
 
     @Autowired
     ApiGroupService apiGroupService;
+    @Autowired
+    ApplicationService applicationService;
 
     @Test
     public void contextLoads() throws InterruptedException {
 
-        for (int i = 0; i < 1000; i++) {
-            //            int randomApiIndex = new Random().nextInt(apis.size());
-            int randomApiIndex = 1;
-            String api = apis.get(randomApiIndex);
-            requestApi(api);
+        for (int j = 0; j < 1; j++) {
+            new Thread(() -> {
+                for (int i = 0; i < 1000; i++) {
+                    try {
+                        Thread.sleep(1000);
 
-            Thread.sleep(1000);
+                        int randomApiIndex = new Random().nextInt(apis.size());
+                        //                int randomApiIndex = 0;
+                        String api = apis.get(randomApiIndex);
+                        requestApi(api, i);
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }).start();
         }
+
+
+        Thread.sleep(5000000);
     }
 
-    public void requestApi(String api) {
+    public void requestApi(String api, int i) {
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
@@ -60,7 +77,7 @@ public class GatewayAdminApplicationTests {
             res =
                 restTemplate.exchange(String.format("http://localhost:8093/%s", api), HttpMethod.GET, httpEntity, String.class);
 
-            System.out.println(String.format("api: %s, response: %s", api, res.getBody()));
+            System.out.println(String.format("api %s: %s, response: %s", i, api, res.getBody()));
         } catch (HttpClientErrorException e) {
             System.out.println(e.getResponseBodyAsString());
             throw e;
@@ -73,7 +90,7 @@ public class GatewayAdminApplicationTests {
         //        System.out.println(application);
 
         List<Permission> permissions =
-            apiGroupService.getAppPermission("zujuan", Permission.TYPE_API);
+            applicationService.getAppPermission("zujuan", Permission.TYPE_API);
         System.out.println(permissions);
         for (Permission permission : permissions) {
             permission.getAppId();
@@ -82,24 +99,16 @@ public class GatewayAdminApplicationTests {
         }
     }
 
-    //    private String accessQbs() {
-    //
-    //    }
-    //
-    //    private String accessMds() {
-    //
-    //    }
-
     private void doMdmAuth(HttpHeaders headers) {
         String token =
-            new String(Base64.getEncoder().encode("zujuan:Q&qtpkzq%okyRR0AwqYfM6Qch3GHahSv".getBytes()));
+            new String(Base64.getEncoder().encode("ali:0cx-yx#xn8RArA162JLbG)4nJHOth5Ut".getBytes()));
 
         headers.add("Authorization", String.format("Basic %s", token));
     }
 
     private void doGatewayAuth(HttpHeaders headers) {
-        String appId = "zujuan";
-        String secret = "87aJG8L6WiJo9zqL&FM2unYIW&DyE4u7";
+        String appId = "ali";
+        String secret = "0cx-yx#xn8RArA162JLbG)4nJHOth5Ut";
 
         Map<String, Object> tokenParams = new HashMap<>();
         tokenParams.put("timestamp", System.currentTimeMillis());

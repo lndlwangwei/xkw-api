@@ -1,8 +1,8 @@
 package com.xkw.gateway.auth;
 
 import com.xkw.gateway.common.GatewayException;
-import com.xkw.gateway.domain.ApiGroup;
-import com.xkw.gateway.service.ApiGroupService;
+import com.xkw.gateway.domain.Application;
+import com.xkw.gateway.service.ApplicationService;
 import com.xkw.gateway.service.PermissionService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -30,7 +30,7 @@ import java.util.List;
 public class GatewayAuthentication {
 
     @Autowired
-    ApiGroupService apiGroupService;
+    ApplicationService applicationService;
     @Autowired
     PermissionService permissionService;
     @Autowired
@@ -60,9 +60,9 @@ public class GatewayAuthentication {
         String appId = authentication.substring(0, index);
         String secret = authentication.substring(index + 1);
 
-        ApiGroup apiGroup = apiGroupService.getById(appId);
+        Application application = applicationService.getById(appId);
         // todo 密码加密处理
-        if (apiGroup == null || !apiGroup.getSecret().equals(secret)) {
+        if (application == null || !application.getSecret().equals(secret)) {
             throw new GatewayException("凭据无效，认证失败");
         }
 
@@ -85,8 +85,8 @@ public class GatewayAuthentication {
         if (StringUtils.isEmpty(appId) || StringUtils.isEmpty(signature)) {
             throw new GatewayException("签名信息不完整");
         }
-        ApiGroup apiGroup = apiGroupService.getById(appId);
-        String secret = apiGroup.getSecret();
+        Application application = applicationService.getById(appId);
+        String secret = application.getSecret();
         Jws<Claims> claimsJws;
         try {
             claimsJws = Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(signature);

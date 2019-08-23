@@ -13,5 +13,5 @@ public interface PermissionRepository extends CrudRepository<Permission, Integer
 
     List<Permission> getByAppIdAndType(String appId, int type);
 
-    int deleteByAppId(String appId);
+    int deleteByAppIdAndGroupId(String appId, String groupId);
 }
