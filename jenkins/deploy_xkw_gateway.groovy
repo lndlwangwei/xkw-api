@@ -21,7 +21,7 @@ nodes.entrySet().each {entry ->
                 warnError(message: 'service is not online') {
                     // result = sh(script: "<shell command>", returnStdout: true).trim()
                     // result = sh(script: "<shell command>", returnStatus: true).trim()
-                    def portStatus = sh(script: "echo -n '\n'|telnet localhost 807$serviceIndex|grep Connected|wc -l", returnStatus: true)
+                    def portStatus = sh(script: "echo -n '\n'|telnet localhost 807$serviceIndex|grep Connected|wc -l", returnStdout: true)
                     echo "port status: $portStatus"
 
                     // 将服务从eureka server中主动下线
