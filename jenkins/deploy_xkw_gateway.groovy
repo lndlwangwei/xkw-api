@@ -18,12 +18,12 @@ nodes.entrySet().each {entry ->
                 def serviceIndex = service.equals("temp") ? 9 : Integer.parseInt(service.substring(service.length() - 1))
                 def profile = service.equals("temp") ? 'temp' : "node$serviceIndex"
 
-                warnError(message: 'service is not online') {
-                    // result = sh(script: "<shell command>", returnStdout: true).trim()
-                    // result = sh(script: "<shell command>", returnStatus: true).trim()
-                    def portStatus = sh(script: "echo -n '\n'|telnet localhost 807$serviceIndex|grep Connected|wc -l", returnStdout: true)
-                    echo "port status: $portStatus"
-
+                // result = sh(script: "<shell command>", returnStdout: true).trim()
+                // result = sh(script: "<shell command>", returnStatus: true).trim()
+                // 先检查服务是否是启动的，如果是，就下线并关闭服务，如果不是，就什么也不做
+                def portStatus = sh(script: "echo -n '\n'|telnet localhost 807$serviceIndex|grep Connected|wc -l", returnStdout: true).trim()
+                echo "port status: $portStatus"
+                if (portStatus.equal("1")) {
                     // 将服务从eureka server中主动下线
                     sh "curl localhost:807$serviceIndex/offline"
                     sh "sleep 1m"
