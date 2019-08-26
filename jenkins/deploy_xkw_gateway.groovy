@@ -23,7 +23,6 @@ nodes.entrySet().each {entry ->
                 // 先检查服务是否是启动的，如果是，就下线并关闭服务，如果不是，就什么也不做
                 def portStatus = sh(script: "echo -n '\n'|telnet localhost 807$serviceIndex|grep Connected|wc -l", returnStdout: true).trim()
                 echo "port status: $portStatus"
-                echo "type: $portStatus.class"
                 if (portStatus == "1") {
                     // 将服务从eureka server中主动下线
                     sh "curl localhost:807$serviceIndex/offline"
