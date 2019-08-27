@@ -1,5 +1,5 @@
-//def nodes = ['dev':['temp', 'gateway1'], '28test':['temp', 'gateway1']]
-def nodes = ['dev':['temp', 'gateway1']]
+def nodes = ['dev':['temp', 'gateway1'], '28test':['temp', 'gateway1']]
+//def nodes = ['dev':['temp', 'gateway1']]
 def serviceBasePath = '/data/service/gateways'
 def buildProjectName = "xkw-api-gateway-build"
 
