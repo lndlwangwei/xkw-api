@@ -46,7 +46,7 @@ nodes.entrySet().each {entry ->
         stage('stop temp server') {
             echo 'stopping temp server'
 
-// todo            sh "sleep 1m"
+            sh "sleep 1m"
             // 如果服务中有临时服务，需要停掉临时服务
             if (services.contains('temp')) {
 
