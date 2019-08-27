@@ -1,4 +1,5 @@
-def nodes = ['dev':['temp', 'gateway1'], '28test':['temp', 'gateway1']]
+//def nodes = ['dev':['temp', 'gateway1'], '28test':['temp', 'gateway1']]
+def nodes = ['dev':['temp', 'gateway1']]
 def serviceBasePath = '/data/service/gateways'
 def buildProjectName = "xkw-api-gateway-build"
 
@@ -26,7 +27,7 @@ nodes.entrySet().each {entry ->
                 if (portStatus == "1") {
                     // 将服务从eureka server中主动下线
                     sh "curl localhost:807$serviceIndex/offline"
-// todo                    sh "sleep 1m"
+                    sleep time: 1, unit: 'MINUTES'
                     // 确保下线后，再停掉服务
                     sh "curl -X POST localhost:807$serviceIndex/actuator/shutdown"
                 }
@@ -36,9 +37,10 @@ nodes.entrySet().each {entry ->
                     sh "mkdir ${servicePath}"
                 }
                 sh "cp gateway/target/*.jar ${servicePath}"
+                sleep time: 1, unit: 'MINUTES'
 
                 withEnv(['JENKINS_NODE_COOKIE=dontkillme']) {
-                    sleep time: 1, unit: 'MINUTES'
+
                     sh "java -jar ${servicePath}/gateway-0.0.1-SNAPSHOT.jar --spring.profiles.active=$profile &"
                 }
             }
@@ -52,7 +54,8 @@ nodes.entrySet().each {entry ->
             if (services.contains('temp')) {
 
                 sh "curl localhost:8079/offline"
-// todo                sh "sleep 1m"
+
+                sleep time: 1, unit: 'MINUTES'
                 // 确保临时服务没有被访问后，在停掉临时服务
                 sh "curl -X POST localhost:8079/actuator/shutdown"
             }
