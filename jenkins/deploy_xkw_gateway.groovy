@@ -38,6 +38,7 @@ nodes.entrySet().each {entry ->
                 sh "cp gateway/target/*.jar ${servicePath}"
 
                 withEnv(['JENKINS_NODE_COOKIE=dontkillme']) {
+                    sleep time: 1, unit: 'MINUTES'
                     sh "java -jar ${servicePath}/gateway-0.0.1-SNAPSHOT.jar --spring.profiles.active=$profile &"
                 }
             }
