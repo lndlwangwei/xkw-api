@@ -26,7 +26,7 @@ nodes.entrySet().each {entry ->
                 if (portStatus == "1") {
                     // 将服务从eureka server中主动下线
                     sh "curl localhost:807$serviceIndex/offline"
-                    sh "sleep 1m"
+// todo                    sh "sleep 1m"
                     // 确保下线后，再停掉服务
                     sh "curl -X POST localhost:807$serviceIndex/actuator/shutdown"
                 }
@@ -46,12 +46,12 @@ nodes.entrySet().each {entry ->
         stage('stop temp server') {
             echo 'stopping temp server'
 
-            sh "sleep 1m"
+// todo            sh "sleep 1m"
             // 如果服务中有临时服务，需要停掉临时服务
             if (services.contains('temp')) {
 
                 sh "curl localhost:8079/offline"
-                sh "sleep 1m"
+// todo                sh "sleep 1m"
                 // 确保临时服务没有被访问后，在停掉临时服务
                 sh "curl -X POST localhost:8079/actuator/shutdown"
             }
