@@ -35,7 +35,7 @@ nodes.entrySet().each {entry ->
                 if (!fileExists(servicePath)) {
                     sh "mkdir ${servicePath}"
                 }
-                sh "cp target/*.jar ${servicePath}"
+                sh "cp gateway/target/*.jar ${servicePath}"
 
                 withEnv(['JENKINS_NODE_COOKIE=dontkillme']) {
                     sh "java -jar ${servicePath}/gateway-0.0.1-SNAPSHOT.jar --spring.profiles.active=$profile &"

@@ -10,7 +10,9 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>core</module>
+        <module>eureka-server</module>
+        <module>gateway</module>
+        <module>gateway-admin</module>
     </modules>
-
 
 </project>
