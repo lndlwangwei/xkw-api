@@ -32,12 +32,13 @@ nodes.entrySet().each {entry ->
                     sh "curl -X POST localhost:807$serviceIndex/actuator/shutdown"
                 }
 
+                sleep time: 1, unit: 'MINUTES'
+
                 def servicePath = "$serviceBasePath/$service"
                 if (!fileExists(servicePath)) {
                     sh "mkdir ${servicePath}"
                 }
                 sh "cp gateway/target/*.jar ${servicePath}"
-                sleep time: 1, unit: 'MINUTES'
 
                 withEnv(['JENKINS_NODE_COOKIE=dontkillme']) {
 
@@ -46,19 +47,19 @@ nodes.entrySet().each {entry ->
             }
         }
 
-//        stage('stop temp server') {
-//            echo 'stopping temp server'
-//
-//            sleep time: 1, unit: 'MINUTES'
-//            // 如果服务中有临时服务，需要停掉临时服务
-//            if (services.contains('temp')) {
-//
-//                sh "curl localhost:8079/offline"
-//
-//                sleep time: 1, unit: 'MINUTES'
-//                // 确保临时服务没有被访问后，在停掉临时服务
-//                sh "curl -X POST localhost:8079/actuator/shutdown"
-//            }
-//        }
+        stage('stop temp server') {
+            echo 'stopping temp server'
+
+            sleep time: 1, unit: 'MINUTES'
+            // 如果服务中有临时服务，需要停掉临时服务
+            if (services.contains('temp')) {
+
+                sh "curl localhost:8079/offline"
+
+// todo                sleep time: 1, unit: 'MINUTES'
+                // 确保临时服务没有被访问后，在停掉临时服务
+                sh "curl -X POST localhost:8079/actuator/shutdown"
+            }
+        }
     }
 }
