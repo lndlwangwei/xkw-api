@@ -25,7 +25,7 @@ spring:
     gateway:
       routes:
       - id: route_qbs
-        uri: http://localhost:8084
+        uri: http://10.1.23.147:8084
         predicates:
         - Path=/qbm/**
         filters:
@@ -34,7 +34,7 @@ spring:
             redis-rate-limiter.replenishRate: 10000
             redis-rate-limiter.burstCapacity: 10000
       - id: route_mdm
-        uri: http://localhost:8081
+        uri: http://10.1.23.147:8081
         predicates:
         - Path=/master/**
         filters:
