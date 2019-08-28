@@ -42,6 +42,8 @@ spring:
           args:
             redis-rate-limiter.replenishRate: 10000
             redis-rate-limiter.burstCapacity: 10000
+  redis:
+    host: 10.1.23.147
 
 #    添加对springcloud gateway的监控
 management:
