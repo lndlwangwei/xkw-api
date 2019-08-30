@@ -1,4 +1,5 @@
 def basePath = '/data/test'
+def scriptHome = "$WORKSPACE/jenkins1"
 // nginx path
 def nginxBasePath = "$basePath/nginx"
 
@@ -13,7 +14,7 @@ node('28test') {
             sh "mkdir $nginxBasePath"
         }
 
-        sh "cp -r $WORKSPACE/mdmServerEnv/nginx/conf $nginxBasePath"
+        sh "cp -r $scriptHome/mdmServerEnv/nginx/conf $nginxBasePath"
     }
 
 }
