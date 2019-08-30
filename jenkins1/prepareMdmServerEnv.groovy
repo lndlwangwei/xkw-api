@@ -26,9 +26,9 @@ node('28test') {
             sh "mkdir $nginxLogPath"
         }
 
-        sh "docker pull $nginxDockerImageName"
+//        sh "docker pull $nginxDockerImageName"
 
-        def existContainer = sh(script: "docker rm $nginxContainerName", returnStatus: true)
+//        def existContainer = sh(script: "docker rm $nginxContainerName", returnStatus: true)
         echo existContainer
 
         sh "docker run -d -p 9080:9080 -v $nginxLogPath:/var/log/nginx -v $nginxBasePath/conf:/etc/nginx/ --name=$nginxContainerName xuekewang/jetty-9:v1"
