@@ -4,6 +4,8 @@ def nginxBasePath = "$basePath/nginx"
 
 node('28test') {
     stage('prepare nginx') {
+        git 'https://github.com/lndlwangwei/xkw-api'
+
         if (!fileExists(basePath)) {
             sh "mkdir $basePath"
         }
