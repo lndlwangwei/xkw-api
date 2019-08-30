@@ -28,7 +28,8 @@ node('28test') {
 
 //        sh "docker pull $nginxDockerImageName"
 
-        sh(script: "docker rm $nginxContainerName", returnStatus: true)
+        def status = sh(script: "docker rm $nginxContainerName", returnStatus: true)
+        echo "status: $status"
 
         sh "docker run -d -p 9080:9080 -v $nginxLogPath:/var/log/nginx -v $nginxBasePath/conf:/etc/nginx/ --name=$nginxContainerName xuekewang/jetty-9:v1"
     }
