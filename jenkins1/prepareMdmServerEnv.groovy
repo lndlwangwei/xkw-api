@@ -28,6 +28,7 @@ node('28test') {
 
 //        sh "docker pull $nginxDockerImageName"
 
+        sh "docker stop $nginxContainerName"
         def status = sh(script: "docker rm $nginxContainerName", returnStatus: true)
         echo "status: $status"
 
