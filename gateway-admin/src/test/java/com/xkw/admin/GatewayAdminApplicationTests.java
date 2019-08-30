@@ -56,6 +56,13 @@ public class GatewayAdminApplicationTests {
 
 
         Thread.sleep(5000000);
+        while (true) {
+            if (Thread.activeCount() == 1) {
+                break;
+            }
+
+            Thread.sleep(5000);
+        }
     }
 
     int count;
