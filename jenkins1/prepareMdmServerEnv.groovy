@@ -28,6 +28,7 @@ node('28test') {
 
         sh "docker pull $nginxDockerImageName"
 
+        sh "docker rm $nginxContainerName"
         sh "docker run -p 9080:9080 -v $nginxLogPath:/var/log/nginx -v $nginxBasePath/conf:/etc/nginx/ --name=$nginxContainerName xuekewang/jetty-9:v1"
     }
 
