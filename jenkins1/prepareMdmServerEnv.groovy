@@ -3,8 +3,9 @@ def basePath = '/data/test'
 def nginxBasePath = "$basePath/nginx"
 
 node('28test') {
+    def scriptHome = "$WORKSPACE/jenkins1"
+
     stage('prepare nginx') {
-        def scriptHome = "$WORKSPACE/jenkins1"
         git 'https://github.com/lndlwangwei/xkw-api'
 
         if (!fileExists(basePath)) {
