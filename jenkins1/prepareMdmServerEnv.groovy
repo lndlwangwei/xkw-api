@@ -11,7 +11,7 @@ node('28test') {
             sh "mkdir $nginxBasePath"
         }
 
-        sh "cp -r mdmServerEnv/nginx/conf $nginxBasePath"
+        sh "cp -r $WORKSPACE/mdmServerEnv/nginx/conf $nginxBasePath"
     }
 
 }
