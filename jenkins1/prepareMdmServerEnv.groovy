@@ -27,7 +27,7 @@ node('28test') {
             sh "mkdir $nginxLogPath"
         }
 
-//        sh "docker pull $nginxDockerImageName"
+        sh "docker pull $nginxDockerImageName"
 
         sh "docker stop $nginxContainerName"
         def status = sh(script: "docker rm $nginxContainerName", returnStatus: true)
