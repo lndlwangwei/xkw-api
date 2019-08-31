@@ -1,3 +1,5 @@
+//  要求服务器系统是centos6.5及以上
+
 def basePath = '/data/test'
 // nginx config
 def nginxBasePath = "$basePath/nginx"
