@@ -1,4 +1,5 @@
-//  要求服务器系统是centos6.5及以上
+// 要求服务器系统是centos6.5及以上
+// 提前创建用户xkwx，并且拥有sudo权限
 
 def basePath = '/data/test'
 // nginx config
@@ -64,7 +65,7 @@ node('28test') {
         sh "docker run -d -e GO_SERVER_URL=\"http://36.110.49.106:8154/go\" --name $gocdAgentContainerName $gocdAgentImageName"
 
         // 准备go agent要调用的脚本
-        sh "cp $scriptHome/mdmServerEnv/gocd/script $gocdBasePath"
+        sh "cp -r $scriptHome/mdmServerEnv/gocd/script $gocdBasePath"
         sh "chmod +x $scriptHome/mdmServerEnv/gocd/script/*"
     }
 }
