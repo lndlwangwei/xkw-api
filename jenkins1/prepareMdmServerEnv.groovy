@@ -61,6 +61,7 @@ node('28test') {
 
         sh "docker pull $gocdAgentImageName"
 
+        sh "docker stop $gocdAgentContainerName"
         sh(script: "docker rm $gocdAgentContainerName", returnStatus: true)
         sh "docker run -d -e GO_SERVER_URL=\"http://36.110.49.106:8154/go\" --name $gocdAgentContainerName $gocdAgentImageName"
 
