@@ -2,19 +2,22 @@ def basePath = '/data/test'
 // nginx config
 def nginxBasePath = "$basePath/nginx"
 def nginxLogPath = "$basePath/log"
-def nginxDockerImageName = "xuekewang/jetty-9:v1"
+def nginxDockerImageName = "xuekewang/nginx:v1"
 def nginxContainerName = "docker-nginx"
+// jetty config
+def jettyBasePath = "$basePath/nginx"
+def jettyDockerImageName = "xuekewang/jetty9:v1"
 
 node('28test') {
     git 'https://github.com/lndlwangwei/xkw-api'
     def scriptHome = "$WORKSPACE/jenkins1"
 
+    if (!fileExists(basePath)) {
+        sh "mkdir $basePath"
+    }
+
     stage('prepare nginx') {
 
-
-        if (!fileExists(basePath)) {
-            sh "mkdir $basePath"
-        }
         if (!fileExists(nginxBasePath)) {
             sh "mkdir $nginxBasePath"
         }
@@ -33,10 +36,12 @@ node('28test') {
         def status = sh(script: "docker rm $nginxContainerName", returnStatus: true)
         echo "status: $status"
 
-        sh "docker run -d -p 9080:9080 -v $nginxLogPath:/var/log/nginx -v $nginxBasePath/conf:/etc/nginx/ --name=$nginxContainerName xuekewang/jetty-9:v1"
+        sh "docker run -d -p 9080:9080 -v $nginxLogPath:/var/log/nginx -v $nginxBasePath/conf:/etc/nginx/ --name=$nginxContainerName $nginxDockerImageName"
     }
 
-//    stage('prepare jetty') {
-//
-//    }
+    stage('prepare jetty') {
+        if (!fileExists(nginxBasePath)) {
+            sh "mkdir $nginxBasePath"
+        }
+    }
 }
