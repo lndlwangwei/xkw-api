@@ -7,6 +7,10 @@ def nginxContainerName = "docker-nginx"
 // jetty config
 def jettyBasePath = "$basePath/nginx"
 def jettyDockerImageName = "xuekewang/jetty9:v1"
+// gocd config
+def gocdBasePath = "$basePath/gocd"
+def gocdAgentImageName = 'gocd/gocd-agent-alpine-3.10:v19.7.0'
+def gocdAgentContainerName = 'gocd-agent'
 
 node('28test') {
     git 'https://github.com/lndlwangwei/xkw-api'
@@ -43,5 +47,21 @@ node('28test') {
         if (!fileExists(nginxBasePath)) {
             sh "mkdir $nginxBasePath"
         }
+
+        sh "docker pull $jettyDockerImageName"
+    }
+
+    stage('prepare gocd agent') {
+        if (!fileExists(gocdBasePath)) {
+            sh "mkdir $gocdBasePath"
+        }
+
+        sh "docker pull $gocdAgentImageName"
+
+        sh "docker run -d -e GO_SERVER_URL=\"http://36.110.49.106:8154/go\" $gocdAgentImageName"
+
+        // 准备go agent要调用的脚本
+        sh "cp $scriptHome/mdmServerEnv/gocd/script $gocdBasePath"
+        sh "chmod +x $scriptHome/mdmServerEnv/gocd/script/*"
     }
 }
