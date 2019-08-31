@@ -6,7 +6,7 @@ def nginxDockerImageName = "xuekewang/nginx:v1"
 def nginxContainerName = "docker-nginx"
 // jetty config
 def jettyBasePath = "$basePath/nginx"
-def jettyDockerImageName = "xuekewang/jetty9:v1"
+def jettyDockerImageName = "xuekewang/jetty-9:v1"
 // gocd config
 def gocdBasePath = "$basePath/gocd"
 def gocdAgentImageName = 'gocd/gocd-agent-alpine-3.10:v19.7.0'
@@ -58,7 +58,8 @@ node('28test') {
 
         sh "docker pull $gocdAgentImageName"
 
-        sh "docker run -d -e GO_SERVER_URL=\"http://36.110.49.106:8154/go\" $gocdAgentImageName"
+        sh(script: "docker rm $gocdAgentContainerName", returnStatus: true)
+        sh "docker run -d -e GO_SERVER_URL=\"http://36.110.49.106:8154/go\" --name $gocdAgentContainerName $gocdAgentImageName"
 
         // 准备go agent要调用的脚本
         sh "cp $scriptHome/mdmServerEnv/gocd/script $gocdBasePath"
