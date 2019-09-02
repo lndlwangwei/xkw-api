@@ -15,7 +15,7 @@ def gocdBasePath = "$basePath/gocd"
 def gocdAgentImageName = 'gocd/gocd-agent-alpine-3.10:v19.7.0'
 def gocdAgentContainerName = 'gocd-agent'
 // redis config
-def redisImageName = '10.1.22.28:5000/redis'
+def redisImageName = '10.1.22.28:5000/xkw-redis'
 def redisContainerName = 'redis'
 
 node('28test') {
