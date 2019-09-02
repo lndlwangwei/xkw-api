@@ -15,8 +15,8 @@ def gocdBasePath = "$basePath/gocd"
 def gocdAgentImageName = 'gocd/gocd-agent-alpine-3.10:v19.7.0'
 def gocdAgentContainerName = 'gocd-agent'
 // redis config
-def redisImageName = '10.1.22.28:5000/xkw-redis'
-def redisContainerName = 'redis'
+def redisImageName = '10.1.22.28:5000/redis'
+def redisContainerName = 'xkw-redis'
 
 node('28test') {
     git 'https://github.com/lndlwangwei/xkw-api'
@@ -74,7 +74,7 @@ node('28test') {
     }
 
     stage('prepare redis') {
-        sh "docker stop $redisContainerName"
+        sh(script:  "docker stop $redisContainerName", returnStatus: true)
         sh(script: "docker rm $redisContainerName", returnStatus: true)
         sh "docker run -d -p 6379:6379 --name $redisContainerName $redisContainerName"
     }
