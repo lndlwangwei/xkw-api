@@ -76,6 +76,6 @@ node('28test') {
     stage('prepare redis') {
         sh(script:  "docker stop $redisContainerName", returnStatus: true)
         sh(script: "docker rm $redisContainerName", returnStatus: true)
-        sh "docker run -d -p 6379:6379 --name $redisContainerName $redisContainerName"
+        sh "docker run -d -p 6379:6379 --name $redisContainerName $redisImageName"
     }
 }
