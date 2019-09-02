@@ -14,6 +14,9 @@ def jettyDockerImageName = "xuekewang/jetty-9:v1"
 def gocdBasePath = "$basePath/gocd"
 def gocdAgentImageName = 'gocd/gocd-agent-alpine-3.10:v19.7.0'
 def gocdAgentContainerName = 'gocd-agent'
+// redis config
+def redisImageName = '10.1.22.28:5000/redis'
+def redisContainerName = 'redis'
 
 node('28test') {
     git 'https://github.com/lndlwangwei/xkw-api'
@@ -68,5 +71,11 @@ node('28test') {
         // 准备go agent要调用的脚本
         sh "cp -r $scriptHome/mdmServerEnv/gocd/script $gocdBasePath"
         sh "chmod +x $scriptHome/mdmServerEnv/gocd/script/*"
+    }
+
+    stage('prepare redis') {
+        sh "docker stop $redisContainerName"
+        sh(script: "docker rm $redisContainerName", returnStatus: true)
+        sh "docker run -d -p 6379:6379 --name $redisContainerName $redisContainerName"
     }
 }
