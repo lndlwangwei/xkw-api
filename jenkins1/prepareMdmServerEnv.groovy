@@ -82,6 +82,6 @@ node('28test') {
 
         sh(script:  "docker stop $redisContainerName", returnStatus: true)
         sh(script: "docker rm $redisContainerName", returnStatus: true)
-        sh "docker run -d -p 6379:6379 -v $redisBasePath/conf/redis.conf:/usr/local/etc/redis/redis.conf --name $redisContainerName $redisImageName"
+        sh "docker run -d -p 6379:6379 -v $redisConfPath/conf/redis.conf:/usr/local/etc/redis/redis.conf --name $redisContainerName $redisImageName"
     }
 }
