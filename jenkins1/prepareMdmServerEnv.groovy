@@ -15,6 +15,7 @@ def gocdBasePath = "$basePath/gocd"
 def gocdAgentImageName = 'gocd/gocd-agent-alpine-3.10:v19.7.0'
 def gocdAgentContainerName = 'gocd-agent'
 // redis config
+def redisBasePath = "$basePath/redis"
 def redisImageName = '10.1.22.28:5000/redis'
 def redisContainerName = 'xkw-redis'
 
@@ -74,8 +75,13 @@ node('28test') {
     }
 
     stage('prepare redis') {
+        if (!fileExists(redisBasePath)) {
+            sh "mkdir -p $redisBasePath"
+            sh "cp -r $scriptHome/redis/conf $redisBasePath"
+        }
+
         sh(script:  "docker stop $redisContainerName", returnStatus: true)
         sh(script: "docker rm $redisContainerName", returnStatus: true)
-        sh "docker run -d -p 6379:6379 --name $redisContainerName $redisImageName"
+        sh "docker run -d -p 6379:6379 -v $redisBasePath/conf/redis.conf:/usr/local/etc/redis/redis.conf --name $redisContainerName $redisImageName"
     }
 }
