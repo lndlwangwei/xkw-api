@@ -75,13 +75,13 @@ node('28test') {
     }
 
     stage('prepare redis') {
-        if (!fileExists(redisConfPath)) {
-            sh "mkdir -p $redisConfPath"
-            sh "cp $scriptHome/mdmServerEnv/redis/conf/redis.conf $redisConfPath"
-        }
+//        if (!fileExists(redisConfPath)) {
+//            sh "mkdir -p $redisConfPath"
+//            sh "cp $scriptHome/mdmServerEnv/redis/conf/redis.conf $redisConfPath"
+//        }
 
         sh(script:  "docker stop $redisContainerName", returnStatus: true)
         sh(script: "docker rm $redisContainerName", returnStatus: true)
-        sh "docker run -d -p 6379:6379 -v $redisConfPath/redis.conf:/usr/local/etc/redis/redis.conf --name $redisContainerName $redisImageName"
+        sh "docker run -d -p 6379:6379 --name $redisContainerName $redisImageName --requirepass rzQP46/ThrECyHQ2tlEMSw=="
     }
 }
