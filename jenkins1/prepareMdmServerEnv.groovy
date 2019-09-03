@@ -77,7 +77,7 @@ node('28test') {
     stage('prepare redis') {
         if (!fileExists(redisBasePath)) {
             sh "mkdir -p $redisBasePath"
-            sh "cp -r $scriptHome/redis/conf $redisBasePath"
+            sh "cp -r $scriptHome/mdmServerEnv/redis/conf $redisBasePath"
         }
 
         sh(script:  "docker stop $redisContainerName", returnStatus: true)
