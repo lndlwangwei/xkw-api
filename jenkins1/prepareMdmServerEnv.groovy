@@ -82,6 +82,6 @@ node('28test') {
 
         sh(script:  "docker stop $redisContainerName", returnStatus: true)
         sh(script: "docker rm $redisContainerName", returnStatus: true)
-        sh "docker run -d -p 6379:6379 --name $redisContainerName $redisImageName --requirepass rzQP46/ThrECyHQ2tlEMSw=="
+        sh "docker run -d -p 6379:6379 --name $redisContainerName $redisImageName --requirepass rzQP46/ThrECyHQ2tlEMSw== --appendonly yes"
     }
 }
