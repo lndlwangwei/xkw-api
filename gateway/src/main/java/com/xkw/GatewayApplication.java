@@ -4,6 +4,8 @@ import com.netflix.discovery.DiscoveryManager;
 import com.xkw.gateway.auth.GatewayAuthentication;
 import com.xkw.gateway.auth.GatewayAuthorization;
 import com.xkw.gateway.common.GatewayException;
+import com.xkw.gateway.model.GatewayRoute;
+import com.xkw.gateway.service.GatewayRouteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,7 @@ import reactor.core.publisher.Mono;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Objects;
 
 // todo gateway 路由监控和动态配置  actuator
@@ -41,9 +44,16 @@ public class GatewayApplication {
     GatewayAuthentication gatewayAuthentication;
     @Autowired
     GatewayAuthorization gatewayAuthorization;
+    @Autowired
+    GatewayRouteService gatewayRouteService;
 
     public static void main(String[] args) {
         SpringApplication.run(GatewayApplication.class, args);
+    }
+
+    @GetMapping("/test")
+    public List<GatewayRoute> getList() {
+        return gatewayRouteService.getAll();
     }
 
 //    @Bean

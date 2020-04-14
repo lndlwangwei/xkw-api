@@ -28,6 +28,8 @@ public class ApiGroup implements Serializable {
     @Size(min = 1)
     private String url;
     private String apiPrefix;
+    // api文档url地址，相对于apiPrefix
+    private String documentationUrl;
     @NotNull(message = "description不能为空")
     @Size(min = 1)
     private String description;
@@ -62,6 +64,14 @@ public class ApiGroup implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDocumentationUrl() {
+        return documentationUrl;
+    }
+
+    public void setDocumentationUrl(String documentationUrl) {
+        this.documentationUrl = documentationUrl;
     }
 
     public String getUrl() {

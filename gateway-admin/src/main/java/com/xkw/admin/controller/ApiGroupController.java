@@ -26,8 +26,8 @@ public class ApiGroupController {
     }
 
     @PostMapping
-    public void save(@RequestBody @Valid ApiGroup application) {
-        apiGroupService.save(application);
+    public void save(@RequestBody @Valid ApiGroup apiGroup) {
+        apiGroupService.save(apiGroup);
     }
 
     @DeleteMapping("/{id}")

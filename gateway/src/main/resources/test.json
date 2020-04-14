@@ -1,0 +1,54 @@
+[
+  {
+    "route_id": "route_qbs",
+    "route_definition": {
+      "id": "route_qbs",
+      "predicates": [
+        {
+          "name": "Path",
+          "args": {
+            "_genkey_0": "/qbm/**"
+          }
+        }
+      ],
+      "filters": [
+        {
+          "name": "RequestRateLimiter",
+          "args": {
+            "redis-rate-limiter.replenishRate": "10000",
+            "redis-rate-limiter.burstCapacity": "10000"
+          }
+        }
+      ],
+      "uri": "http://10.1.23.147:8084",
+      "order": 0
+    },
+    "order": 0
+  },
+  {
+    "route_id": "route_mdm",
+    "route_definition": {
+      "id": "route_mdm",
+      "predicates": [
+        {
+          "name": "Path",
+          "args": {
+            "_genkey_0": "/master/**"
+          }
+        }
+      ],
+      "filters": [
+        {
+          "name": "RequestRateLimiter",
+          "args": {
+            "redis-rate-limiter.replenishRate": "10000",
+            "redis-rate-limiter.burstCapacity": "10000"
+          }
+        }
+      ],
+      "uri": "http://10.1.23.147:8081",
+      "order": 0
+    },
+    "order": 0
+  }
+]
