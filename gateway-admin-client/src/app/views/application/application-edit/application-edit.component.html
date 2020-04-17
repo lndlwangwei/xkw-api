@@ -1,0 +1,69 @@
+<div class="card">
+  <div class="card-header">
+    <h4>
+      应用信息
+      <button type="button" class="close" (click)="modalRef.hide()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </h4>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-append">
+              <span class="input-group-text">ID</span>
+            </div>
+            <input type="text" [(ngModel)]="application.id" disabled="true" class="form-control"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-append">
+              <span class="input-group-text">名称</span>
+            </div>
+            <input type="text" [(ngModel)]="application.name" class="form-control"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-append">
+              <span class="input-group-text">密钥</span>
+            </div>
+            <input type="text" [(ngModel)]="application.secret" class="form-control"/>
+            <div class="input-group-append">
+              <button class="btn btn-warning" (click)="genSecret(application)">
+                <i class="fa fa-key"></i>生成
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-append">
+              <span class="input-group-text">描述</span>
+            </div>
+            <textarea class="form-control" [(ngModel)]="application.description" rows="5"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <button type="button" class="btn btn-primary pull-right" (click)="save()">保存</button>
+      <button type="button" class="btn btn-secondary pull-right mr-1" (click)="modalRef.hide()">取消</button>
+    </div>
+  </div>
+</div>

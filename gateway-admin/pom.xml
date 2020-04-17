@@ -57,7 +57,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.xkw</groupId>
+            <groupId>com.xkw.api-gateway</groupId>
             <artifactId>core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
