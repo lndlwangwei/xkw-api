@@ -39,7 +39,7 @@ public class GatewayAuthorization {
                 continue;
             }
 
-            boolean match = this.pathMatcher.match(permission.getApiPermissionPath(), path);
+            boolean match = this.pathMatcher.match(permission.getApiPermissionPath().replaceAll("\\{[^\\}]+}", "*"), path);
             if (match && (permission.getApiPermissionMethod().contains(method)
                 || permission.getApiPermissionMethod().contains("*"))) {
                 // path 和 method都验证通过，此处才放行

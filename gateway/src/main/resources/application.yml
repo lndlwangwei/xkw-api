@@ -42,6 +42,27 @@ spring:
   #          args:
   #            redis-rate-limiter.replenishRate: 10000
   #            redis-rate-limiter.burstCapacity: 10000
+  #      - id: route_rbs
+  #        uri: http://localhost:8087
+  #        predicates:
+  #          - Path=/rbm/**
+  #        filters:
+  #          - name: RequestRateLimiter
+  #            args:
+  #              redis-rate-limiter.replenishRate: 10000
+  #              redis-rate-limiter.burstCapacity: 10000
+  #          - StripPrefix=1
+  #
+  #      - id: route_preview
+  #        uri: http://localhost:8088
+  #        predicates:
+  #          - Path=/preview/**
+  #        filters:
+  #          - name: RequestRateLimiter
+  #            args:
+  #              redis-rate-limiter.replenishRate: 10000
+  #              redis-rate-limiter.burstCapacity: 10000
+  #          - StripPrefix=1
   redis:
     host: 10.1.23.147
 
