@@ -21,15 +21,12 @@ public class ApiGroup implements Serializable {
     @NotNull(message = "name不能为空")
     @Size(min = 1)
     private String name;
-    @NotNull(message = "secret不能为空")
-    @Size(min = 1)
-    private String secret;
     @NotNull(message = "url不能为空")
     @Size(min = 1)
     private String url;
     private String apiPrefix;
-    // api文档url地址，相对于apiPrefix
-    private String documentationUrl;
+    // api详情的url地址，相对于apiPrefix
+    private String apiInfoUrl;
     @NotNull(message = "description不能为空")
     @Size(min = 1)
     private String description;
@@ -50,28 +47,12 @@ public class ApiGroup implements Serializable {
         this.name = name;
     }
 
-    public String getSecret() {
-        return secret;
-    }
-
-    public void setSecret(String secret) {
-        this.secret = secret;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getDocumentationUrl() {
-        return documentationUrl;
-    }
-
-    public void setDocumentationUrl(String documentationUrl) {
-        this.documentationUrl = documentationUrl;
     }
 
     public String getUrl() {
@@ -88,5 +69,17 @@ public class ApiGroup implements Serializable {
 
     public void setApiPrefix(String apiPrefix) {
         this.apiPrefix = apiPrefix;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getApiInfoUrl() {
+        return apiInfoUrl;
+    }
+
+    public void setApiInfoUrl(String apiInfoUrl) {
+        this.apiInfoUrl = apiInfoUrl;
     }
 }

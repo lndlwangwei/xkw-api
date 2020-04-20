@@ -17,7 +17,7 @@ public class GatewayRouteService {
 
     @Autowired
     GatewayRouteRepository gatewayRouteRepository;
-    @Autowired
+//    @Autowired
     RedisRouteDefinitionRepository redisRouteDefinitionRepository;
 
     @Cacheable(key = "'allGatewayRoute'")

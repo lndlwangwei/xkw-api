@@ -25,21 +25,9 @@
         <div class="form-group">
           <div class="input-group">
             <div class="input-group-append">
-              <span class="input-group-text">名称</span>
+              <span class="input-group-text"><a href="javascript:void(0)">名称</a></span>
             </div>
             <input type="text" [(ngModel)]="apiGroup.name" class="form-control"/>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12 col-md-12 col-lg-12">
-        <div class="form-group">
-          <div class="input-group">
-            <div class="input-group-append">
-              <span class="input-group-text">密钥</span>
-            </div>
-            <input type="text" [(ngModel)]="apiGroup.secret" class="form-control"/>
           </div>
         </div>
       </div>
@@ -73,9 +61,21 @@
         <div class="form-group">
           <div class="input-group">
             <div class="input-group-append">
-              <span class="input-group-text">documentation</span>
+              <span class="input-group-text">apiInfoUrl</span>
             </div>
-            <input type="text" [(ngModel)]="apiGroup.documentationUrl" class="form-control"/>
+            <input type="text" [(ngModel)]="apiGroup.apiInfoUrl" class="form-control"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-append">
+              <span class="input-group-text">文档地址</span>
+            </div>
+            <input type="text" [(ngModel)]="apiGroup.docUrl" class="form-control"/>
           </div>
         </div>
       </div>

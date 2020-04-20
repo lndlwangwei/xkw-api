@@ -13,10 +13,9 @@
             <tr>
               <th width="5%">id</th>
               <th width="10%">名称</th>
-              <th width="20%">密钥</th>
               <th width="20%">url</th>
               <th width="5%">api前缀</th>
-              <th width="5%">documentation</th>
+              <th width="5%">api info url</th>
               <th width="20%">描述</th>
               <td width="15%">操作</td>
             </tr>
@@ -24,11 +23,10 @@
             <tbody>
             <tr *ngFor="let apiGroup of apiGroups">
               <td>{{apiGroup.id}}</td>
-              <td>{{apiGroup.name}}</td>
-              <td>{{apiGroup.secret}}</td>
+              <td><a href="javascript:void(0)" title="点击查看文档" (click)="goToDoc(apiGroup)">{{apiGroup.name}}</a></td>
               <td>{{apiGroup.url}}</td>
               <td>{{apiGroup.apiPrefix}}</td>
-              <td>{{apiGroup.documentationUrl}}</td>
+              <td>{{apiGroup.apiInfoUrl}}</td>
               <td>{{apiGroup.description}}</td>
               <td>
                 <button *ngIf="!appId" class="btn btn-warning btn-sm" (click)="openEditModal(apiGroup)">编辑</button>

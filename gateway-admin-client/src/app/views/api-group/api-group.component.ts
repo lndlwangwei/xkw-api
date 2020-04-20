@@ -6,6 +6,7 @@ import {AlertService} from '../../common/alert/alert.service';
 import {PermissionManageComponent} from './permission-manage/permission-manage.component';
 import {ActivatedRoute} from '@angular/router';
 import {ApplicationService} from '../../common/service/application.service';
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-api-group',
@@ -66,5 +67,9 @@ export class ApiGroupComponent implements OnInit {
       this.alertService.alertInfo('删除成功');
       this.getApiGroup();
     });
+  }
+
+  goToDoc(apiGroup) {
+    window.open(`${environment.swaggerDocUrl}?urls.primaryName=${apiGroup.name}`);
   }
 }

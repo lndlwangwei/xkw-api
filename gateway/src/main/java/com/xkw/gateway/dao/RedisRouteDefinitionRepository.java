@@ -6,7 +6,6 @@ import com.xkw.gateway.service.GatewayRouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionRepository;
-import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -15,7 +14,7 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
+//@Component
 public class RedisRouteDefinitionRepository implements RouteDefinitionRepository {
 
     @Autowired

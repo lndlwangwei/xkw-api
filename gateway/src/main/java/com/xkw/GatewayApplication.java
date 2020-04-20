@@ -4,12 +4,10 @@ import com.netflix.discovery.DiscoveryManager;
 import com.xkw.gateway.auth.GatewayAuthentication;
 import com.xkw.gateway.auth.GatewayAuthorization;
 import com.xkw.gateway.common.GatewayException;
-import com.xkw.gateway.model.GatewayRoute;
 import com.xkw.gateway.service.GatewayRouteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
@@ -19,17 +17,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.Objects;
 
 // todo gateway 路由监控和动态配置  actuator
@@ -51,21 +46,6 @@ public class GatewayApplication {
         SpringApplication.run(GatewayApplication.class, args);
     }
 
-    @GetMapping("/test")
-    public List<GatewayRoute> getList() {
-        return gatewayRouteService.getAll();
-    }
-
-//    @Bean
-//    public RouteLocator myRoutes(RouteLocatorBuilder builder) {
-//        return builder.routes()
-//            .route(p -> p
-//                .path("/get")
-//                .filters(f -> f.addRequestHeader("Hello", "World"))
-//                .uri("https://www.baidu.com"))
-//            .build();
-//    }
-
     @Bean
     KeyResolver customKeyResolver() {
         return exchange -> {
@@ -77,14 +57,6 @@ public class GatewayApplication {
 
             return Mono.just(String.format("%s:%s", hostname, apiName));
         };
-    }
-
-    @Value("${server.port}")
-    int port;
-    @RequestMapping("bar")
-    public String testRewritePath() throws UnknownHostException {
-        String ip = InetAddress.getLocalHost().getHostAddress();
-        return String.format("bar %s %s", ip, port);
     }
 
     @GetMapping("offline")
@@ -101,6 +73,10 @@ public class GatewayApplication {
             try {
                 String appId = gatewayAuthentication.doJwtAuthc(exchange.getRequest());
                 gatewayAuthorization.doAuthorization(appId, exchange.getRequest());
+
+                // 授权通过后，想header中添加一个Proxy_Authorized的header
+                ServerHttpRequest host = exchange.getRequest().mutate().header("Proxy_Authorized", "true").build();
+                exchange.mutate().request(host).build();
             } catch (GatewayException e) {
                 ServerHttpResponse response = exchange.getResponse();
                 response.setStatusCode(HttpStatus.FORBIDDEN);

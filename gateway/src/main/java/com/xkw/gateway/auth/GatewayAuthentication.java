@@ -61,7 +61,6 @@ public class GatewayAuthentication {
         String secret = authentication.substring(index + 1);
 
         Application application = applicationService.getById(appId);
-        // todo 密码加密处理
         if (application == null || !application.getSecret().equals(secret)) {
             throw new GatewayException("凭据无效，认证失败");
         }
@@ -98,7 +97,7 @@ public class GatewayAuthentication {
         Calendar c = Calendar.getInstance();
         c.add(Calendar.MINUTE, -5);
         if (timestamp.before(c.getTime())) {
-            throw new GatewayException("签名信息已过期");
+//            throw new GatewayException("签名信息已过期");
         }
     }
 }
