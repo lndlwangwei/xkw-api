@@ -6,8 +6,6 @@ def env = [
         artifactName: 'gateway-admin-client/gateway_client.zip',
 ]
 
-def envProp = allEnvProps[projectName]
-
 node(nodeName) {
     stage('deploy') {
         copyArtifacts(projectName: "${env.buildProjectName}")
