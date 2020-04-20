@@ -11,7 +11,7 @@ node(nodeName) {
         copyArtifacts(projectName: "${env.buildProjectName}")
 
         sh "rm -rf ${env.appDir}/*"
-        sh "cp ${gateway-admin-client}/${env.artifactName} ${env.appDir}"
+        sh "cp gateway-admin-client/${env.artifactName} ${env.appDir}"
         sh "unzip ${env.appDir}/${env.artifactName} -d ${env.appDir}"
         sh "rm -f ${env.appDir}/${env.artifactName}"
     }
