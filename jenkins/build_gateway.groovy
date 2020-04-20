@@ -10,5 +10,6 @@ node('159test') {
 
         archiveArtifacts 'gateway/target/*.jar'
         archiveArtifacts 'gateway-admin/target/*.jar'
+        archiveArtifacts 'jenkins/scripts/*.sh'
     }
 }

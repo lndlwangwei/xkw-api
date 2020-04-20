@@ -1,21 +1,11 @@
-eureka:
-  instance:
-    prefer-ip-address: true
-  client:
-    serviceUrl:
-      defaultZone: http://10.1.23.147:8761/eureka/
+server:
+  port: 8079
 
-#  instance:
-#    instance-id: ${spring.application.name}:${random.int}
 spring:
-#  profiles:
-#    active: node1
+  profiles:
+    active: dev
   application:
     name: xkw-api-gateway
-  datasource:
-    url: jdbc:mysql://localhost:3306/xkw_gateway?useSSL=false&characterEncoding=utf-8
-    username: root
-    password: root
   jpa:
     show-sql: true
     properties:
@@ -63,8 +53,6 @@ spring:
   #              redis-rate-limiter.replenishRate: 10000
   #              redis-rate-limiter.burstCapacity: 10000
   #          - StripPrefix=1
-  redis:
-    host: 10.1.23.147
 
 #    添加对springcloud gateway的监控
 management:
@@ -78,5 +66,27 @@ management:
       exposure:
         include: "*"
 
-server:
-  port: 8079
+---
+spring:
+  profiles: dev
+  redis:
+    host: 10.1.23.147
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://10.1.23.147:8761/eureka/
+
+
+---
+spring:
+  profiles: product
+  redis:
+    host: 10.25.174.96
+    database: 0
+    port: 6379
+    password: rzQP46/ThrECyHQ2tlEMSw==
+    timeout: 5000ms
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://10.27.13.142:8000/eureka/
