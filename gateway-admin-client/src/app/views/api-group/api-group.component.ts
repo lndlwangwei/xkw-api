@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiGroupService} from '../../common/service/api-group.service';
-import {BsModalRef, BsModalService} from 'ngx-bootstrap';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import {ApiGroupEditComponent} from './api-group-edit/api-group-edit.component';
 import {AlertService} from '../../common/alert/alert.service';
 import {PermissionManageComponent} from './permission-manage/permission-manage.component';

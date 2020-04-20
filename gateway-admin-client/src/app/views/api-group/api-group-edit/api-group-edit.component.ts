@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {BsModalRef} from 'ngx-bootstrap';
+import {BsModalRef} from 'ngx-bootstrap/modal';
 import {ApiGroupService} from '../../../common/service/api-group.service';
 import {AlertService} from '../../../common/alert/alert.service';
 

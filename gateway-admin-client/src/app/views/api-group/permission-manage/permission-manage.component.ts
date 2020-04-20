@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {BsModalRef} from 'ngx-bootstrap';
+import {BsModalRef} from 'ngx-bootstrap/modal';
 import {ApiService} from '../../../common/service/api.service';
 import {ZtreeComponent} from '../../../common/ztree/ztree.component';
 import {AppPermissionUtils} from '../../../common/utils/AppPermissionUtils';

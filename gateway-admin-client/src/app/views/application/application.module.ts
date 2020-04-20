@@ -6,7 +6,8 @@ import {ApplicationService} from '../../common/service/application.service';
 import {ApplicationEditComponent} from './application-edit/application-edit.component';
 import {MyCommonModule} from '../../common/my-common.module';
 import {FormsModule} from '@angular/forms';
-import {AlertModule, ModalModule} from 'ngx-bootstrap';
+import {AlertModule} from 'ngx-bootstrap/alert';
+import {ModalModule} from 'ngx-bootstrap/modal';
 
 
 @NgModule({
