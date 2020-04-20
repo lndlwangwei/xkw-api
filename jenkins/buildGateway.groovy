@@ -10,6 +10,7 @@ node('159test') {
 
         archiveArtifacts 'gateway/target/*.jar'
         archiveArtifacts 'gateway-admin/target/*.jar'
+        archiveArtifacts 'gateway-admin-client/gateway_client.zip'
         archiveArtifacts 'jenkins/scripts/*.sh'
     }
 }

@@ -1,7 +1,7 @@
 def nodeName = currentBuild.projectName.find(/\(([^\)]+)\)/, {group -> group[1]})
 def projectName = currentBuild.projectName.split('\\(')[0];
 def allEnvProps = [
-    'xkw_gateway': [
+    'xkw-gateway': [
         buildProjectName: 'xkw-gateway-build(159test)',
         appDir: '/data/apps/xkw-gateway',
         artifact: 'gateway/target/gateway-0.0.1-SNAPSHOT.jar',
@@ -9,7 +9,7 @@ def allEnvProps = [
         scriptPath: 'jenkins/scripts/*',
         scriptLocalDir: '/data/jenkins/xkw-gateway/scripts',
     ],
-    'xkw_gateway-admin': [
+    'xkw-gateway-admin': [
          buildProjectName: 'xkw-gateway-build(159test)',
          appDir: '/data/apps/xkw-gateway-admin',
          scriptPath: 'jenkins/scripts/*',
