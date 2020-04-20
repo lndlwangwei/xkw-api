@@ -10,7 +10,7 @@
     <appender name="accessLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>/home/wangwei/Desktop/accessLog.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>/data/logs/xkw-gateway/accessLog.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
