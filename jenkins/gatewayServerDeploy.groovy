@@ -8,6 +8,7 @@ def allEnvProps = [
         artifactName: 'gateway-0.0.1-SNAPSHOT.jar',
         scriptPath: 'jenkins/scripts/*',
         scriptLocalDir: '/data/jenkins/xkw-gateway/scripts',
+        env: 'product'
     ],
     'xkw-gateway-admin': [
          buildProjectName: 'xkw-gateway-build(159test)',
@@ -16,6 +17,7 @@ def allEnvProps = [
          scriptLocalDir: '/data/jenkins/xkw-gateway/scripts',
          artifact: 'gateway-admin/target/gateway-admin-0.0.1-SNAPSHOT.jar',
          artifactName: 'gateway-admin-0.0.1-SNAPSHOT.jar',
+         env: 'product'
     ]
 ]
 
