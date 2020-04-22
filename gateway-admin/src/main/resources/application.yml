@@ -26,6 +26,12 @@ eureka:
 ---
 spring:
   profiles: product
+  redis:
+    host: 10.25.174.96
+    database: 2
+    port: 6379
+    password: rzQP46/ThrECyHQ2tlEMSw==
+    timeout: 5000ms
   datasource:
     url: jdbc:mysql://localhost:3306/xkw_gateway?useSSL=false&characterEncoding=utf-8
     username: xkw

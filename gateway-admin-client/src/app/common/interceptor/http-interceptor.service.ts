@@ -9,7 +9,7 @@ import {AlertService} from '../alert/alert.service';
 })
 export class HttpInterceptorService implements HttpInterceptor {
 
-  private consolrUrl = 'http://10.1.23.147:8093/';
+  private consolrUrl = 'http://rbm.xkw.com/api/gateway/';
 
   constructor(public alertService: AlertService) {
   }

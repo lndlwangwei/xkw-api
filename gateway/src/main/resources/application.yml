@@ -15,48 +15,48 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-  #  cloud:
-  #    gateway:
-  #      routes:
-  #      - id: route_qbs
-  #        uri: http://10.1.23.147:8084
-  #        predicates:
-  #        - Path=/qbm/**
-  #        filters:
-  #        - name: RequestRateLimiter
-  #          args:
-  #            redis-rate-limiter.replenishRate: 10000
-  #            redis-rate-limiter.burstCapacity: 10000
-  #      - id: route_mdm
-  #        uri: http://10.1.23.147:8081
-  #        predicates:
-  #        - Path=/master/**
-  #        filters:
-  #        - name: RequestRateLimiter
-  #          args:
-  #            redis-rate-limiter.replenishRate: 10000
-  #            redis-rate-limiter.burstCapacity: 10000
-  #      - id: route_rbs
-  #        uri: http://localhost:8087
-  #        predicates:
-  #          - Path=/rbm/**
-  #        filters:
-  #          - name: RequestRateLimiter
-  #            args:
-  #              redis-rate-limiter.replenishRate: 10000
-  #              redis-rate-limiter.burstCapacity: 10000
-  #          - StripPrefix=1
-  #
-  #      - id: route_preview
-  #        uri: http://localhost:8088
-  #        predicates:
-  #          - Path=/preview/**
-  #        filters:
-  #          - name: RequestRateLimiter
-  #            args:
-  #              redis-rate-limiter.replenishRate: 10000
-  #              redis-rate-limiter.burstCapacity: 10000
-  #          - StripPrefix=1
+#  cloud:
+#    gateway:
+#      routes:
+#      - id: route_qbs
+#        uri: http://10.1.23.147:8084
+#        predicates:
+#        - Path=/qbm/**
+#        filters:
+#        - name: RequestRateLimiter
+#          args:
+#            redis-rate-limiter.replenishRate: 10000
+#            redis-rate-limiter.burstCapacity: 10000
+#      - id: route_mdm
+#        uri: http://10.1.23.147:8081
+#        predicates:
+#        - Path=/master/**
+#        filters:
+#        - name: RequestRateLimiter
+#          args:
+#            redis-rate-limiter.replenishRate: 10000
+#            redis-rate-limiter.burstCapacity: 10000
+#      - id: route_rbs
+#        uri: http://localhost:8087
+#        predicates:
+#          - Path=/rbm/**
+#        filters:
+#          - name: RequestRateLimiter
+#            args:
+#              redis-rate-limiter.replenishRate: 10000
+#              redis-rate-limiter.burstCapacity: 10000
+#          - StripPrefix=1
+#
+#      - id: route_preview
+#        uri: http://localhost:8088
+#        predicates:
+#          - Path=/preview/**
+#        filters:
+#          - name: RequestRateLimiter
+#            args:
+#              redis-rate-limiter.replenishRate: 10000
+#              redis-rate-limiter.burstCapacity: 10000
+#          - StripPrefix=1
 
 #    添加对springcloud gateway的监控
 management:
@@ -86,7 +86,7 @@ spring:
   profiles: product
   redis:
     host: 10.25.174.96
-    database: 0
+    database: 2
     port: 6379
     password: rzQP46/ThrECyHQ2tlEMSw==
     timeout: 5000ms
