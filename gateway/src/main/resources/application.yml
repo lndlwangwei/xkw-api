@@ -4,10 +4,6 @@ server:
 spring:
   profiles:
     active: dev
-  datasource:
-    url: jdbc:mysql://localhost:3306/xkw_gateway?useSSL=false&characterEncoding=utf-8
-    username: root
-    password: root
   application:
     name: xkw-api-gateway
   jpa:
@@ -73,6 +69,10 @@ management:
 ---
 spring:
   profiles: dev
+  datasource:
+    url: jdbc:mysql://localhost:3306/xkw_gateway?useSSL=false&characterEncoding=utf-8
+    username: root
+    password: root
   redis:
     host: 10.1.23.147
 eureka:
@@ -84,6 +84,10 @@ eureka:
 ---
 spring:
   profiles: product
+  datasource:
+    url: jdbc:mysql://localhost:3306/xkw_gateway?useSSL=false&characterEncoding=utf-8
+    username: xkw
+    password: xkw.com1QAZ
   redis:
     host: 10.25.174.96
     database: 2
