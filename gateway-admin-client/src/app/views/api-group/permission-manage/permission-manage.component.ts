@@ -50,7 +50,7 @@ export class PermissionManageComponent implements OnInit {
   };
 
   ngOnInit() {
-    const documentationUrl = this.apiGroup.apiInfoUrl ? this.apiGroup.url + this.apiGroup.apiInfoUrl : this.apiGroup.url;
+    const documentationUrl = `$api-group/${this.apiGroup.id}/docs`;
     this.apiService.getApiInfo(documentationUrl).subscribe(response => {
       console.log(response);
       this.znodes = response;
