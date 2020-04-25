@@ -27,7 +27,7 @@ public class ApiGroupService {
         return IteratorUtils.toList(apiGroupRepository.findAll().iterator());
     }
 
-    @Cacheable(value = "api-group", key = "#id")
+    @Cacheable(value = "api-group", key = "#id", unless = "#result == null")
     public ApiGroup getById(String id) {
         return apiGroupRepository.findById(id).orElse(null);
     }

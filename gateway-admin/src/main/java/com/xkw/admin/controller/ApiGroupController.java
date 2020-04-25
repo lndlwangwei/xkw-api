@@ -4,6 +4,7 @@ import com.xkw.gateway.domain.ApiGroup;
 import com.xkw.gateway.service.ApiGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -19,6 +20,8 @@ public class ApiGroupController {
 
     @Autowired
     ApiGroupService apiGroupService;
+    //    @Autowired
+    RestTemplate restTemplate = new RestTemplate();
 
     @GetMapping
     public List<ApiGroup> getAll() {
@@ -35,5 +38,10 @@ public class ApiGroupController {
         apiGroupService.delete(id);
     }
 
-
+    @GetMapping("/{id}/docs")
+    public String getApiDocs(@PathVariable String id) {
+        ApiGroup apiGroup = apiGroupService.getById(id);
+        String url = String.format("%s%s", apiGroup.getUrl(), apiGroup.getApiInfoUrl());
+        return restTemplate.getForObject(url, String.class);
+    }
 }

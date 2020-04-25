@@ -58,7 +58,7 @@ public class Swagger2Config implements SwaggerResourcesProvider {
 
         List<ApiGroup> apiGroups = apiGroupService.getAll();
         List<SwaggerResource> resources = apiGroups.stream()
-                .map(apiGroup -> swaggerResource(apiGroup.getName(), String.format("%s%s", apiGroup.getUrl(), apiGroup.getApiInfoUrl()), "v1"))
+                .map(apiGroup -> swaggerResource(apiGroup.getName(), String.format("/api-group/%s/docs", apiGroup.getId()), "v1"))
                 .collect(Collectors.toList());
 
         return resources;

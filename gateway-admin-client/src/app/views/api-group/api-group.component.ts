@@ -70,6 +70,6 @@ export class ApiGroupComponent implements OnInit {
   }
 
   goToDoc(apiGroup) {
-    window.open(`${environment.swaggerDocUrl}?urls.primaryName=${apiGroup.name}`);
+    window.open(`${environment.swaggerDocUrl}`);
   }
 }
